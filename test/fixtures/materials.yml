@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: 椅子
+  price: 4000
+  size: 0
+  detail: 椅子です
+
+two:
+  title: DVD
+  price: 1500
+  size: 0
+  detail: 「room」の映画です

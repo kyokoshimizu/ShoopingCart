@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  material_id: 1
+  photo: 
+  photo_content_type: MyString
+
+two:
+  material_id: 1
+  photo: 
+  photo_content_type: MyString
