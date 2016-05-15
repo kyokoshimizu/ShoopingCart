@@ -1,0 +1,31 @@
+<h1>個人情報変更</h1>
+<p id="notice"><%= notice %></p>
+<%= form_for @self_information do |f| %>
+	<div class="field">
+		<%= f.label :name, "NAME" %>
+		<%= f.text_field :name %>
+	</div>
+	<br>
+	<div class="field">
+		<%= f.label :address, "ADDRESS" %>
+		<%= f.text_field :address %>
+	</div>
+	<br>
+	<div class="field">
+		<%= f.label :payment_method, "PAYMENT" %>
+		<%= f.select :payment_method,
+		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+		 { include_blank: '選択してください'} %>
+	</div>
+	<br>
+	<div class="field">
+		<%= f.label :phone_number, "PHONE_NUMBER" %>
+		<%= f.text_field :phone_number %>
+	</div>
+	<div class="action">
+		<%= f.submit "送信" %>
+	</div>
+<% end %>
+<dev id="action">
+	<%= link_to "戻る", materials_path %>
+</div>

@@ -1,0 +1,23 @@
+<%= fields_for @member.self_information do |af| %>
+	<div class="field">
+		<%= af.label :name, "NAME" %>
+		<%= af.text_field :name %>
+	</div>
+	<br>
+	<div class="field">
+		<%= af.label :address, "ADDRESS" %>
+		<%= af.text_field :address %>
+	</div>
+	<br>
+	<div class="field">
+		<%= af.label :payment_method, "PAYMENT" %>
+		<%= af.select :payment_method,
+		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+		 { include_blank: '選択してください'} %>
+	</div>
+	<br>
+	<div class="field">
+		<%= af.label :phone_number, "PHONE_NUMBER" %>
+		<%= af.text_field :phone_number %>
+	</div>
+<% end %>

@@ -1,0 +1,14 @@
+<h1>商品ページ</h1>
+<%= image_tag photo_photo_path(@material.id) %><br>
+タイトル：<%= @material.title %>
+<br>
+値段：<%= @material.price %>円
+<br>
+サイズ：<%= @material.size %>
+<br>
+詳細：<%= @material.detail %>
+<br>
+<%= link_to "SCヘイレル！", new_cart_detail_path(id: params[:id]), remote: true %>
+<br>
+<div id='result'></div>
+<%= link_to "商品一覧ページ", materials_path %>

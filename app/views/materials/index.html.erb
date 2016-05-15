@@ -1,0 +1,47 @@
+<h1>商品一覧</h1>
+<% if @name != "" %>
+<%= @name %>さん
+<% end %>
+こんにちは！
+<p id="msg"><%= flash[:msg] %></p>
+<div class="field">
+	<%= form_tag({controller: :materials}, method: :get, id: :category) do%>
+		<%= select_tag :category, options_for_select({ Category.get_category(0) => 0, Category.get_category(1) => 1, Category.get_category(2) => 2 }, params[:category]) %>
+	  <%= submit_tag '検索' %>
+	<% end %>
+</div>
+<div class="field">
+	<%= link_to "SCページへ", shopping_carts_path %>
+</div>
+<table border="1">
+	<tr>
+		<th>タイトル</th><th>価格(税抜)</th><th>サイズ</th><th>詳細</th><th>カテゴリ</th><th>リンク</th>
+	</tr>
+
+	<% @materials.each do |material| %>
+		<tr>
+			<td><%= material.title %></td>
+			<td><%= material.price %></td>
+			<td><%= material.size %></td>
+			<td><%= material.detail %></td>
+			<td><%= Category.get_category(Category.find_by(material_id: material.id).category) %></td>
+			<td><%= link_to "商品詳細へ", material_path(material.id) %></td>
+		</tr>
+	<% end %>
+</table>
+
+<% if @name != "" %>
+	<div class="field">
+		<%= link_to "閲覧履歴ページ", browsing_histories_path %>
+	</div>
+	<div class="field">
+		<%= link_to "購入履歴ページ", orders_path %>
+	</div>
+	<div class="field">
+		<%= link_to "個人情報変更", edit_self_information_path(@info_id) %>
+	</div>
+<% end %>
+
+<div class="field">
+	<%= link_to "登録確認ページ", controller: :orders, action: :register %>
+</div>

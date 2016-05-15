@@ -1,0 +1,26 @@
+<h1>過去の買い物履歴</h1>
+
+<% if !@member.orders %>
+	まだ一度も買い物してないでする
+<% else %>
+	<table border="1">
+		<tr>
+			<th></th><th>購入日</th><th>宛先名</th><th>詳細リンク</th>
+		</tr>
+
+		<% @member.orders.each_with_index do |order, i| %>
+			<% if order.decide_order == true %>
+				<tr>
+					<td><%= i+1 %>.</td>
+					<td>　<%= order.created_at.strftime('%Y年%m月%d日 %H:%M') %>　</td>
+					<td>　<%= order.name%>様　</td>
+					<td>　<%= link_to "詳細", order_path(order.id) %>　</td>
+				</tr>
+			<% end %>
+		<% end %>
+	</table>
+<% end %>
+
+<div>
+	<%= link_to "戻る", materials_path %>
+</div>

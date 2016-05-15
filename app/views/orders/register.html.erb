@@ -1,0 +1,35 @@
+<h1>登録確認ページ</h1>
+<h2>あなたの購入リスト</h2>
+<% sum = 0 %>
+	<% @materials.each do |material| %>
+		<div id='field'>
+			<% cart_detail = @cart_details.find_by(material_id: material.id) %>
+			・<%= material.title %>　=>　<%= material.price %>円　×　<%= cart_detail.num %><br>
+		</div>
+		<% sum += (material.price * cart_detail.num) %>
+	<% end %>
+<p>-----------------------------------</p>
+<p>合計：<%= sum %>円</p>
+<p>+ 税：<%= (sum * 0.08).to_i %>円</p>
+<p>-----------------------------------</p>
+<p>合計金額：<%= (sum * 1.08).to_i %>円</p>
+
+<% if session[:shopping_cart_id] == -1 %>
+	<p>まだ何も選んでないですよ</p>
+<% else %>
+	<% if !@order.name %>
+		<%= link_to "支払い方法登録", new_order_path %>
+	<% else %>
+		<h2>購入方法</h2>
+		名前：　<%= @order.name %><br>
+		住所：　<%= @order.address %><br>
+		支払い方法：　<%= @payment_method %><br>
+		電話番号：　<%= @order.phone_number %><br>
+		<%= link_to "購入確定", action: 'decide' %>
+	<% end %>
+	<br>
+	<% if @name != "" %>
+		<%= link_to "送り先変更", @path %>
+	<% end %>
+<% end %>
+<%=link_to "戻る", controller: :materials %>
