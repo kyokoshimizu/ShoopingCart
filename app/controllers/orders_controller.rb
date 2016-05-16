@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-
 	def index
 		@member = Member.find(session[:member_id])
 	end
@@ -7,7 +6,9 @@ class OrdersController < ApplicationController
 		@name = session[:name]
 		@materials = ShoppingCart.selected_matelials(session[:shopping_cart_id])
 		@order, @path = Order.get_order(session[:name], session[:shopping_cart_id], session[:member_id])
-		@payment_method = Order.get_method(@order.payment_method)
+		if @name != ""
+			@payment_method = Order.get_method(@order.payment_method)
+		end
 		@cart_details = CartDetail.where(shopping_cart_id: session[:shopping_cart_id])
 	end
 
