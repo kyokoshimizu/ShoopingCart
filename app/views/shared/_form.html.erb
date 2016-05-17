@@ -1,3 +1,13 @@
+<% if @member.self_information.errors.any? %>
+	<div id="error_explanation">
+		<ul>
+		<% @member.self_information.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>
+
 <%= fields_for @member.self_information do |af| %>
 	<div class="field">
 		<%= af.label :name, "NAME" %>

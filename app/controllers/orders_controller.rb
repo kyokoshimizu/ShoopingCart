@@ -28,13 +28,11 @@ class OrdersController < ApplicationController
 
 	def create
 		member_id = Member.find_member(session[:member_id], session[:name])
-		order = Order.new(order_params)
-		order.shopping_cart_id, order.member_id = session[:shopping_cart_id], member_id
-		if order.save
+		@change_order = Order.new(order_params)
+		@change_order.shopping_cart_id, @change_order.member_id = session[:shopping_cart_id], member_id
+		if @change_order.save
 			redirect_to action: :register
 		else
-			@blank = Order.has_blank(params[:order])
-			flash[:notice] = @blank.to_s + "ちゃんと入力してください"
 			render 'new'
 		end
 	end
@@ -44,7 +42,6 @@ class OrdersController < ApplicationController
 		if @order.update(order_params)
 			redirect_to action: 'register'
 		else
-			flash[:notice] = "すべてちゃんと入力してください"
 			render 'edit'
 		end
 	end

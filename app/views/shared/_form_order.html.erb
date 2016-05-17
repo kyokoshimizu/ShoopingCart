@@ -1,4 +1,13 @@
-<p id="notice"><%= notice %></p>
+<% if @change_order.errors.any? %>
+	<div id="error_explanation">
+		<ul>
+		<% @change_order.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>
+
 <%= form_for @change_order do |f| %>
 	<div class="field">
 		<%= f.label :name, "NAME" %>
