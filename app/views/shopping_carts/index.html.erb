@@ -8,7 +8,7 @@
 <br>
 	<table border="1">
 		<tr>
-			<th>商品名</th><th>価格(税抜)</th><th>個数</th><th>合計</th><th>リンク</th><th></th>
+			<th>商品名</th><th>価格(税抜)</th><th>個数</th><th>合計</th><th></th>
 		</tr>
 		<% @cart_details.each_with_index do |cart_detail, i| %>
 			<% m = cart_detail.material_id %>
@@ -18,8 +18,7 @@
 				<td><%= cart_detail.material.price %></td> 
 				<td><div id="update_<%= m %>"><%= cart_detail.num %>こ</div></td>
 				<td><%= (cart_detail.material.price.to_i * cart_detail.num.to_i) %>円</td>
-				<td><%= link_to "商品詳細", material_path(m) %></td>
-				<td><div id="fadeout_<%= m %>"><%= link_to "変更", edit_cart_detail_path(cart_detail.id), remote: true %>　<%= link_to "削除", cart_detail_path(m), method: :delete, remote: true %></div></td>
+				<td><div id="fadeout"><%= link_to "変更", edit_cart_detail_path(cart_detail.id), remote: true %>　<%= link_to "削除", cart_detail_path(m), method: :delete, remote: true %></div></td>
 			</tr>
 		<% end %>
 	</table>

@@ -13,7 +13,7 @@
 
 ActiveRecord::Schema.define(version: 20160513063013) do
 
-  create_table "browsing_histores", force: true do |t|
+  create_table "browsing_histories", force: true do |t|
     t.integer  "material_id"
     t.datetime "day"
     t.datetime "created_at"
