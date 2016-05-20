@@ -1,5 +1,4 @@
 <h1><%= @name %>様の買い物詳細</h1>
-<%= @order.shopping_cart_id %>
 <div id="info">
 	<h2>＜登録情報＞</h2>
 	宛先：<%= @order.name %>様<br>
@@ -15,6 +14,9 @@
 		<% sum += (cart_detail.material.price.to_i * cart_detail.num.to_i) %>
 	<% end %>
 	<h2>合計金額：<%= sum %>円</h2>
+	<h2>税金：　　<%= (sum * 0.08).to_i %>円</h2>
+	----------------------------------------------
+	<h2>　　　　 <%= (sum * 1.08).to_i %>円</h2>
 </div>
 <br>
 <%= link_to "戻る", orders_path %>
