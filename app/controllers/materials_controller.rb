@@ -6,8 +6,10 @@ class MaterialsController < ApplicationController
 			@materials = Material.all
 		end
 		@name = session[:name]
-		member = Member.find(session[:member_id])
-		@info_id = member.self_information.id
+		if session[:name] != ""
+			member = Member.find(session[:member_id])
+			@info_id = member.self_information.id
+		end
 	end
 
 	def show
