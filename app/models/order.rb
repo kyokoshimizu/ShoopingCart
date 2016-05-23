@@ -23,7 +23,15 @@ class Order < ActiveRecord::Base
 		else
 			[Order.new(shopping_cart_id: id), "/orders/new"]
 		end
-	end 
+	end
+
+	def self.check_member(order, member_id)
+		if order.member_id == member_id
+			true
+		else
+			false
+		end
+	end
 
 	def self.get_method(num)
 		method = ["着払い", "銀行振り込み", "カード払い"]
