@@ -16,6 +16,10 @@ class OrdersController < ApplicationController
 		@order = Order.find(params[:id])
 		@cart_details = CartDetail.where(shopping_cart_id: @order.shopping_cart_id)
 		@name = session[:name]
+		if !Order.check_member(@order, session[:member_id])
+			render 'members/error_page'
+
+		end
 	end
 
 	def new
