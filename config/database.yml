@@ -35,4 +35,4 @@ production:
   pool: 5
   username: root
   password: bettylove
-  socket: /tmp/mysql.sock
+  socket: /tmp/ShopingCart.sock
