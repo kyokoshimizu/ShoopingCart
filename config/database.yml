@@ -32,4 +32,6 @@ development:
 
 production:
   <<: *default
+  host: 192.168.250.69
+  encoding: utf8
   socket: /var/lib/mysql/mysql.sock
