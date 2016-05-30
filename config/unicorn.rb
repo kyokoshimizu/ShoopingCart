@@ -1,5 +1,5 @@
 app_path = File.dirname(File.dirname(Dir.pwd))
-worker_processes 2
+worker_processes 1
 working_directory "#{app_path}/current"
 listen "#{app_path}/shared/tmp/sockets/unicorn.sock", :backlog => 64
 timeout 60
