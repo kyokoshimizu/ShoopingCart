@@ -4,6 +4,9 @@ class Member < ActiveRecord::Base
 	has_many :browsing_histories
 	has_many :orders
 	has_many :shopping_carts
+	validates :password,
+		presence: { message: "を入力してください" },
+		format: { with: /\w{1,8}/, allow_blank: true, message: "：半角英数1~8文字で入力してください"}
 
 	def self.judge(user_id)		
 		if Member.find_by(user_id: user_id)
@@ -11,6 +14,17 @@ class Member < ActiveRecord::Base
 		else
 			false
 		end
+	end
+
+	def self.has_error(user_id, password)
+		message = ["ユーザーIDとパスワードを入力してください　", "ユーザーIDを入力してください　", "パスワードを入力してください　", "", ""]
+		i = 0
+		[user_id+password, user_id, password].map do |var|
+			break if var == "" || !var 
+			i += 1
+			message[4] = "半角英数字のみです" if i == 1 && /[^ -~｡-ﾟ]/ =~ var
+		end
+		[message[i], message[4]]
 	end
 
 	def self.has_pass?(params)
