@@ -5,7 +5,6 @@ class MaterialsController < ApplicationController
 		else
 			@materials = Material.all
 		end
-		@name = session[:name]
 		if session[:name] != ""
 			member = Member.find(session[:member_id])
 			@info_id = member.self_information.id

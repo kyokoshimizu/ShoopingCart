@@ -2,8 +2,9 @@ class MembersController < ApplicationController
 	def index
 		session[:name] = ""
 		session[:shopping_cart_id] = -1
-	end
+		@id = session[:shopping_cart_id]
 
+	end
 	def new
 		@member = Member.new
 		@member.self_information = SelfInformation.new
@@ -24,21 +25,25 @@ class MembersController < ApplicationController
 		  session[:member_id] = @member.id
 		  redirect_to materials_path
 		rescue => e
-			@blank = SelfInformation.has_blank(params[:self_information])
-			@blank << "パスワード" if !(Member.has_pass?(params[:member])) 
-			flash[:notice] = @blank.to_s + "ちゃんと入力してください"
 			render 'new'
 	end
 
 	def judge_member
 		user_id = params[:user_id]
 		password = params[:password]
-		if Member.judge(user_id) && Member.find_by(user_id: user_id).authenticate(password)
+		has_blank, has_em = Member.has_error(user_id, password)
+		if has_blank != "" || has_em != ""
+			flash[:notice] = has_blank + has_em
+			redirect_to action: "error_page"
+		elsif Member.judge(user_id) && Member.find_by(user_id: user_id).authenticate(password)
 			member = Member.find_by(user_id: user_id)
 			session[:name] = member.self_information.name
 			session[:member_id] = member.id
+			@params = params
 			redirect_to materials_path
 		else
+			@params = params
+			flash[:notice] = "パスワードまたはユーザーIDが一致しません"
 			redirect_to action: "error_page"
 		end
 	end
@@ -50,7 +55,7 @@ private
 	end
 
 	def info_params
-		params.require(:self_information).permit(:name, :address, :payment_method, :phone_number)
+		params.require(:self_information).permit(:name, :address, :postal, :payment_method, :phone_number)
 	end
 
 end

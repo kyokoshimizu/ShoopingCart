@@ -9,13 +9,12 @@ class SelfInformationsController < ApplicationController
 			session[:name] = info_params[:name]
 			redirect_to materials_path
 		else
-			flash[:notice] = "すべてちゃんと入力してください"
 			render 'edit'
 		end
 	end
 
 private
 	def info_params
-		params.require(:self_information).permit(:name, :address, :payment_method, :phone_number)
+		params.require(:self_information).permit(:name, :address, :postal, :payment_method, :phone_number)
 	end
 end

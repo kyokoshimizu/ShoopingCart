@@ -4,7 +4,7 @@ class CartDetailsController < ApplicationController
 			session[:shopping_cart_id] = ShoppingCart.create_cart(session[:name], session[:member_id])
 		end
 		material_id = params[:id]
-		CartDetail.add(session[:shopping_cart_id], material_id)
+		@cart_detail = CartDetail.add(session[:shopping_cart_id], material_id)
 	end
 	
 	def destroy
@@ -22,9 +22,10 @@ class CartDetailsController < ApplicationController
 	def update
 		cart_detail = CartDetail.find(params[:id])
 		cart_detail.update(num_params)
-		@num = cart_detail.num
+		flash[:notice] = CartDetail.has_error?(cart_detail)
 		redirect_to shopping_carts_path
 	end
+
 private
 	def num_params
 		params.require(:cart_detail).permit(:num)

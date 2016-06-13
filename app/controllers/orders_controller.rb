@@ -13,13 +13,10 @@ class OrdersController < ApplicationController
 	end
 
 	def show
-		@order = Order.find(params[:id])
+		render 'members/error_page' if Order.find_by(id: params[:id]).class == NilClass || !Order.check_member(Order.find(params[:id]), session[:member_id])		
+		@order = Order.find_by(params[:id])
 		@cart_details = CartDetail.where(shopping_cart_id: @order.shopping_cart_id)
 		@name = session[:name]
-		if !Order.check_member(@order, session[:member_id])
-			render 'members/error_page'
-
-		end
 	end
 
 	def new
@@ -42,8 +39,8 @@ class OrdersController < ApplicationController
 	end
 
 	def update
-		@order = Order.find(params[:id])
-		if @order.update(order_params)
+		@change_order = Order.find(params[:id])
+		if @change_order.update(order_params)
 			redirect_to action: 'register'
 		else
 			render 'edit'
@@ -61,11 +58,11 @@ class OrdersController < ApplicationController
 	end
 private
 	def order_params
-		params.require(:order).permit(:name, :address, :payment_method, :phone_number)
+		params.require(:order).permit(:name, :address, :postal, :payment_method, :phone_number)
 	end
 
 	def put_params
 		member = Member.find(session[:member_id])
-		params = { shopping_cart_id: session[:shopping_cart_id], name: member.self_information.name, address: member.self_information.address, payment_method: member.self_information.payment_method, phone_number: member.self_information.phone_number, decide_order: true, member_id: member.id }
+		params = { shopping_cart_id: session[:shopping_cart_id], name: member.self_information.name, address: member.self_information.address, postal: member.self_information.postal, payment_method: member.self_information.payment_method, phone_number: member.self_information.phone_number, decide_order: true, member_id: member.id }
 	end
 end
