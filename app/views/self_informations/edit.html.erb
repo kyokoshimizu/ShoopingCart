@@ -1,5 +1,14 @@
 <h1>個人情報変更</h1>
-<p id="notice"><%= notice %></p>
+<% if @self_information.errors.any? %>
+	<div id="error_explanation">
+		<ul>
+		<% @self_information.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>
+
 <%= form_for @self_information do |f| %>
 	<div class="field">
 		<%= f.label :name, "NAME" %>
@@ -8,6 +17,8 @@
 	<br>
 	<div class="field">
 		<%= f.label :address, "ADDRESS" %>
+		<%= f.label :postal, "〒" %>
+		<%= f.text_field :postal %>
 		<%= f.text_field :address %>
 	</div>
 	<br>

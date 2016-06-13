@@ -1,6 +1,6 @@
 <h1>過去の買い物履歴</h1>
 
-<% if !@member.orders %>
+<% if !@member.orders[0] %>
 	まだ一度も買い物してないでする
 <% else %>
 	<table border="1">

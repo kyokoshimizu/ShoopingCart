@@ -2,8 +2,24 @@
 
 パスワード,個人情報を入力してください.
 <br>
-<p id="notice"><%= notice %></p>
-<% flash.discard[:notice] %>
+<% if @member.errors.any? %>
+	<div id="error_explanation">
+		<ul>
+		<% @member.errors.full_messages.each do |msg| %>
+			<% if msg == "Password confirmation doesn't match Password" %>
+				<% msg = "Password ：正しく入力してください" %>
+				<%# next if @member.password_confirmation %>
+			<% elsif msg == "Password confirmation can't be blank" %>
+				<% msg = "Password ：確認用も入力してください"%>
+			<% elsif msg == "Password can't be blank" %>
+				<% next %>
+			<% end %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>
+
 <%= form_for @member do |f| %>
 	<div class="password_field">
 		<br>

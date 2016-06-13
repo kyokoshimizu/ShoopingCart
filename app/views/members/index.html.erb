@@ -1,26 +1,42 @@
-<div>
-	会員用ログイン
-	<%= form_tag({action: :judge_member}) do%>
-	  <%= label_tag :user_id, "User ID" %>
-	  <%= text_field_tag :user_id %>
-	  <br>
-	  <div class="field">
-		  <%= label_tag :password, "Password" %>
-		  <%= password_field_tag :password %>
+<%= stylesheet_link_tag "members_index", :media => "all" %>
+<h1>お買い物サイトさん</h1>
+<div class="field">
+	<div class="field_left">
+		<h2>会員用ログイン</h2>
+		<div class="inner">
+			<%= form_tag({action: :judge_member}) do%>
+		  	<%= label_tag :user_id, "User ID" %>
+		  	<%= text_field_tag :user_id %>
+		  	<br>
+			  <%= label_tag :password, "Password" %>
+			  <%= password_field_tag :password %>
+				<br>
+				<div class="link">
+		  		<%= submit_tag '会員' %>
+				</div>
+			<% end %>
 		</div>
+	</div>
+	
+	<div class="field_right">
 		<br>
-	  <%= submit_tag '会員' %>
-	<% end %>
+		<h2>新規登録したい人</h2>
+		<div class="inner">
+			<p>会員になると、、、、<br>よりスムーズにお買い物をして頂くことができます！</p>
+			<div class="link">
+				<%= link_to "登録画面", new_member_path %>
+			</div>
+		</div>
+	</div>
 	<br>
-	<br>
-	会員ではない人
-	<br>
-	<%= link_to "一般ログイン", controller: :materials %>
-	<br>
-	<br>
-	新規登録したい人
-	<br>
-	<%= link_to "登録画面", new_member_path %>
+	<div class="field_under">
+		<h2>会員ではない人</h2>
+		<div class="inner">
+			<p>会員ではないかたはこちらから！</p>
+			<div class="link">
+				<%= link_to "商品画面へ", controller: :materials %>
+			</div>
+			<br>
+		</div>
+	</div>
 </div>
-<%= link_to "テスト", action: "error_page" %>
-testtesttest

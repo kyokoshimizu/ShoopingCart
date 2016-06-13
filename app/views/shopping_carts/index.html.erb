@@ -1,11 +1,15 @@
-<h1>
-	<% if @name != "" %>
-		<%= @name %>君の
+	<h1>
+	<% if session[:name] != "" %>
+		<%= session[:name] %>君の
 	<% end %>
 	ショッピングカート
 </h1>
 <% sum = 0 %>
-<br>
+<div id="notice">
+	<% if notice != "" %>
+		<%= notice %>
+	<% end %>
+</div>
 	<table border="1">
 		<tr>
 			<th>商品名</th><th>価格(税抜)</th><th>個数</th><th>合計</th><th>リンク</th><th></th>
@@ -25,4 +29,7 @@
 	</table>
 	合計金額: <span id='sum'><%= sum %></span> 円
 	<br>
-<%= link_to "戻る", materials_path %>
+<div class="field">
+	<%= link_to "登録確認ページ", controller: :orders, action: :register %>
+	<%= link_to "商品一覧ページ", materials_path %>
+</div>

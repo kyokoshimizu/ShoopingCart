@@ -1,6 +1,7 @@
+<%= stylesheet_link_tag "members_index", :media => "all" %>
 <h1>商品一覧</h1>
-<% if @name != "" %>
-<%= @name %>さん
+<% if session[:name] != "" %>
+<%= session[:name] %>さん
 <% end %>
 こんにちは！
 <p id="msg"><%= flash[:msg] %></p>
@@ -30,7 +31,7 @@
 	<% end %>
 </table>
 
-<% if @name != "" %>
+<% if session[:name] != "" %>
 	<div class="field">
 		<%= link_to "閲覧履歴ページ", browsing_histories_path %>
 	</div>
@@ -41,7 +42,3 @@
 		<%= link_to "個人情報変更", edit_self_information_path(@info_id) %>
 	</div>
 <% end %>
-
-<div class="field">
-	<%= link_to "登録確認ページ", controller: :orders, action: :register %>
-</div>

@@ -1,1 +1,10 @@
 $('#update').html("<%= @num %>");
+$('#error_messages').html("
+			<% if @cart_detail.errors.any? %>
+					<ul>
+						<% @cart_detail.errors.full_messages.each do |msg| %>
+							<li><%= msg %></li>
+						<% end %>
+					</ul>
+			<% end %> ");
+//これ使ってないよいまのところ
