@@ -15,7 +15,7 @@ class ShoppingCart < ActiveRecord::Base
 		else
 			member = Member.find(member_id)
 			shopping_cart = member.shopping_carts.build
-			member.save
+			shopping_cart.save
 		end
 		shopping_cart.id
 	end

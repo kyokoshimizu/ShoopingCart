@@ -6,7 +6,7 @@ class Member < ActiveRecord::Base
 	has_many :shopping_carts
 	validates :password,
 		presence: { message: "を入力してください" },
-		format: { with: /\w{1,8}/, allow_blank: true, message: "：半角英数1~8文字で入力してください"}
+		format: { with: /\A\w{1,8}\z/, allow_blank: true, message: "：半角英数1~8文字で入力してください"}
 
 	def self.judge(user_id)		
 		if Member.find_by(user_id: user_id)
@@ -27,15 +27,15 @@ class Member < ActiveRecord::Base
 		[message[i], message[4]]
 	end
 
-	def self.has_pass?(params)
-		if params[:password] == "" || params[:password_confirmation] == ""
-			false
-		elsif params[:password] != params[:password_confirmation]
-			false
-		else
-			true
-		end
-	end
+	#def self.has_pass?(params)
+	#	if params[:password] == "" || params[:password_confirmation] == ""
+	#		false
+	#	elsif params[:password] != params[:password_confirmation]
+	#		false
+	#	else
+	#		true
+	#	end
+	#end
 
 	def self.create_user_id
 		user_id = ""

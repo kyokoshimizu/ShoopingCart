@@ -14,10 +14,4 @@ class SelfInformation < ActiveRecord::Base
 	validates :phone_number,
 		format: { with: /\A\d{10,13}\z/, allow_blank: true, message: "：半角数字で10〜13文字で記入してください" }
 
-	#def self.has_blank(member_param)
-	#	text = {"name" => "名前", "address" => "住所", "postal" => "郵便番号", "payment_method" => "支払い方法", "phone_number" => "電話番号"}
-	#	member_param.select! { |key, var| var == "" }
-	#	member_param.map { |key, var| text[key] }
-	#end
-
 end

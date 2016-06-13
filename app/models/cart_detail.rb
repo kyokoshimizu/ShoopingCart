@@ -3,7 +3,8 @@ class CartDetail < ActiveRecord::Base
 	belongs_to :material
 	validates :num,
 		presence: { on: :update, message: "を入力してください"},
-		numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 99, message: "半角数字で99個までしか選択できません" }
+		numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 99, allow_blank: true,
+									  message: "：半角数字で99個までしか選択できません" }
 
 	def self.add(shopping_cart_id, material_id)
 			cart_detail = CartDetail.find_by(shopping_cart_id: shopping_cart_id, material_id: material_id)
@@ -20,7 +21,7 @@ class CartDetail < ActiveRecord::Base
 		error_message = ""
 		if cart_detail.errors.any?
 			cart_detail.errors.full_messages.each do |msg|
-				msg = "・削除ボタンを押してください\n" if cart_detail.num == 0 
+				msg = "・削除ボタンを押してください\n" if cart_detail.num == 0
 				error_message += msg
 			end
 		end
