@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
 
 	def show
 		render 'members/error_page' if Order.find_by(id: params[:id]).class == NilClass || !Order.check_member(Order.find(params[:id]), session[:member_id])		
-		@order = Order.find_by(params[:id])
+		@order = Order.find(params[:id])
 		@cart_details = CartDetail.where(shopping_cart_id: @order.shopping_cart_id)
 		@name = session[:name]
 	end
