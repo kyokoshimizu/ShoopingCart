@@ -1,0 +1,50 @@
+body{
+	background-color: #FFF0F5;
+	 color: #DB7093;
+	 font-family: "ＭＳ Ｐゴシック";
+}
+
+h1 {
+	 text-align: center; 
+	 }
+
+.field_left {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	top: 75px;
+	width: 50%;
+	text-align: center;
+}
+
+.field_right {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	left: 50%;
+	top: 50px;
+	width: 50%;
+	text-align: center;
+}
+
+.field_under{
+	margin: 0;
+	top: 50%;
+/*	left: 30%; */
+	position: absolute;
+	width: 50%;
+	text-align: center;
+}
+
+.inner{
+	position: absolute;
+	padding: 20px;
+	border: #DB7093 dashed 1px;
+	background-color: white;
+	width: 70%;
+	left: 50px;
+}
+
+.link {
+	text-align: center;
+}
