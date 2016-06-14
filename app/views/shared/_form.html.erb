@@ -23,11 +23,29 @@
 	<br>
 	<div class="field">
 		<%= af.label :payment_method, "PAYMENT" %>
-		<%= af.select :payment_method,
+		<%= af.select(:payment_method,
 		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
-		 { include_blank: '選択してください'} %>
+		 { include_blank: '選択してください'} ,
+		 {id: 'info'}) %>
+	</div>
+
+	<div id='card_info'>
 	</div>
 	<br>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#info').change(function(){
+				var num = $('#info').val();
+				if(num == 3){
+					$.get("<%= new_card_info_path %>")
+				}else{
+					$('#card_info').html("ここだぜ！");
+				}
+			});
+		});
+	</script>
+
 	<div class="field">
 		<%= af.label :phone_number, "PHONE_NUMBER" %>
 		<%= af.text_field :phone_number %>

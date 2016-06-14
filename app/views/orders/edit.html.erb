@@ -1,3 +1,79 @@
 <h1>送り先登録</h1>
-<%= render 'shared/form_order' %>
-<%= link_to "戻る", action: :register %>
+<% if @change_order.errors.any? %>
+	<div id="error_explanation">
+		<ul>
+		<% @change_order.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>
+
+<%= form_for @change_order do |f| %>
+	<div class="field">
+		<%= f.label :name, "NAME" %>
+		<%= f.text_field :name %>
+	</div>
+	<br>
+	<div class="field">
+		<%= f.label :address, "ADDRESS" %>
+		<%= f.label :postal, "〒" %>
+		<%= f.text_field :postal %>
+		<%= f.text_field :address %>
+	</div>
+	<br>
+	<div class="field">
+		<%= f.label :payment_method, "PAYMENT" %>
+		<%= f.select(:payment_method,
+		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+		 { include_blank: '選択してください'},
+		 { id: 'info'}) %>
+	</div>
+	<div id='card_info'>
+	</div>
+
+	<% if @change_order.payment_method == 3 %>
+		<%= field_set_tag 'カード情報' do %>
+			<%= fields_for @change_order.card_info do |af| %>
+				<div class="field">
+					<%= af.label :card_num, "カード番号" %>
+					<%= af.text_field :card_num %>
+				</div>
+
+				<div class="field">
+					<%= af.label :deadline, "有効期限" %>
+					<%= af.select :deadline,
+					 { '1月' => 1, '2月' => 2, '3月' => 3 },
+					 { include_blank: '選択してください'}
+					%>
+				</div>
+
+				<div class="field">
+					<%= af.label :times, "支払い区分" %>
+					<%= af.select :times,
+					 { '1割' => 1, '2回' => 2, '12回' => 3 },
+					 { include_blank: '選択してください'}
+					%>
+				</div>
+
+				<div class="field">
+					<%= af.label :code, "セキュリティコード" %>
+					<%= af.text_field :code %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+	
+	<div class="field">
+		<%= f.label :phone_number, "PHONE_NUMBER" %>
+		<%= f.text_field :phone_number %>
+	</div>
+	<div class="action">
+		<%= f.submit "送信" %>
+	</div>
+<% end %>
+
+<div id="action">
+	<%= link_to "戻る", materials_path %>
+</div>
+<%#= render 'shared/form_order' %>

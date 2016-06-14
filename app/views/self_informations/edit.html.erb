@@ -24,11 +24,55 @@
 	<br>
 	<div class="field">
 		<%= f.label :payment_method, "PAYMENT" %>
-		<%= f.select :payment_method,
+		<%= f.select(:payment_method,
 		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
-		 { include_blank: '選択してください'} %>
+		 { include_blank: '選択してください'},
+		 { id: 'info'}) %>
+	</div>
+	<div id='card_info'>
 	</div>
 	<br>
+	<% if @self_information.payment_method == '3' %>
+		<%= field_set_tag 'カード情報' do %>
+			<%= fields_for @self_information.card_info do |af| %>
+				<div class="field">
+					<%= af.label :card_num, "カード番号" %>
+					<%= af.text_field :card_num %>
+				</div>
+
+				<div class="field">
+					<%= af.label :deadline, "有効期限" %>
+					<%= af.select :deadline,
+					 { '1月' => 1, '2月' => 2, '3月' => 3 },
+					 { include_blank: '選択してください'}
+					%>
+				</div>
+
+				<div class="field">
+					<%= af.label :times, "支払い区分" %>
+					<%= af.select :times,
+					 { '1割' => 1, '2回' => 2, '12回' => 3 },
+					 { include_blank: '選択してください'}
+					%>
+				</div>
+
+				<div class="field">
+					<%= af.label :code, "セキュリティコード" %>
+					<%= af.text_field :code %>
+				</div>
+			<% end %>
+		<% end %>
+	<% end %>
+
+	<script type="text/javascript">
+		//$(document).ready(function(){
+			//$('#info').change(function(){
+			//	var num = $('#info').val();
+			//	$.get("<%= edit_card_info_path(@self_information.id) %>")
+			}
+		//});
+	</script>
+
 	<div class="field">
 		<%= f.label :phone_number, "PHONE_NUMBER" %>
 		<%= f.text_field :phone_number %>
@@ -37,6 +81,6 @@
 		<%= f.submit "送信" %>
 	</div>
 <% end %>
-<dev id="action">
+<div id="action">
 	<%= link_to "戻る", materials_path %>
 </div>
