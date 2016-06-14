@@ -13,13 +13,16 @@ class MembersController < ApplicationController
 	def create
 		@member = Member.new(member_params)
 		@member.self_information = SelfInformation.new(info_params)
-
+		@card_info = CardInfo.new(card_params)
 			Member.transaction do
 				@member.save!
 				@member.self_information.save!
+				@card_info.save!
 			end
+			@card_info.self_information_id = @member.self_information.id
 			@member.user_id = Member.create_user_id
 			@member.save
+			@card_info.save
 			flash[:msg] = "あなたのユーザーIDは、#{@member.user_id} です." 
 			session[:name] = @member.self_information.name
 		  session[:member_id] = @member.id
@@ -58,4 +61,7 @@ private
 		params.require(:self_information).permit(:name, :address, :postal, :payment_method, :phone_number)
 	end
 
+	def card_params
+		params.require(:card_info).permit(:card_num, :deadline, :times, :code)	
+	end
 end

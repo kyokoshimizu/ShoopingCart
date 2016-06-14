@@ -30,8 +30,11 @@ class OrdersController < ApplicationController
 	def create
 		member_id = Member.find_member(session[:member_id], session[:name])
 		@change_order = Order.new(order_params)
+		@card_info = CardInfo.new(card_params)
 		@change_order.shopping_cart_id, @change_order.member_id = session[:shopping_cart_id], member_id
-		if @change_order.save
+		if @change_order.save && @card_info.save
+			@card_info.order_id = @change_order.id
+			@card_info.save
 			redirect_to action: :register
 		else
 			render 'new'
@@ -40,7 +43,7 @@ class OrdersController < ApplicationController
 
 	def update
 		@change_order = Order.find(params[:id])
-		if @change_order.update(order_params)
+		if @change_order.update(order_params) && @change_order.card_info.update(card_params)
 			redirect_to action: 'register'
 		else
 			render 'edit'
@@ -59,6 +62,10 @@ class OrdersController < ApplicationController
 private
 	def order_params
 		params.require(:order).permit(:name, :address, :postal, :payment_method, :phone_number)
+	end
+
+	def card_params
+		params.require(:card_info).permit(:card_num, :deadline, :times, :code)	
 	end
 
 	def put_params
