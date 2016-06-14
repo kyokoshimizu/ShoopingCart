@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  self_information_id: 
+  order_id: 
+  card_num: MyString
+  deadline: 
+  times: 
+  code: MyString
+
+two:
+  self_information_id: 
+  order_id: 
+  card_num: MyString
+  deadline: 
+  times: 
+  code: MyString

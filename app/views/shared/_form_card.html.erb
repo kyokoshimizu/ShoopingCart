@@ -1,0 +1,30 @@
+<br>
+<%= field_set_tag 'カード情報' do %>
+	<%= fields_for @card_info do |f| %>
+		<div class="field">
+			<%= f.label :card_num, "カード番号" %>
+			<%= f.text_field :card_num %>
+		</div>
+
+		<div class="field">
+			<%= f.label :deadline, "有効期限" %>
+			<%= f.select :deadline,
+			 { '1月' => 1, '2月' => 2, '3月' => 3 },
+			 { include_blank: '選択してください'}
+			%>
+		</div>
+
+		<div class="field">
+			<%= f.label :times, "支払い区分" %>
+			<%= f.select :times,
+			 { '1割' => 1, '2回' => 2, '12回' => 3 },
+			 { include_blank: '選択してください'}
+			%>
+		</div>
+
+		<div class="field">
+			<%= f.label :code, "セキュリティコード" %>
+			<%= f.text_field :code %>
+		</div>
+	<% end %>
+<% end %>
