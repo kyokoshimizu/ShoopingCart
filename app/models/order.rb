@@ -1,6 +1,7 @@
 class Order < ActiveRecord::Base
 	belongs_to :shopping_cart
 	belongs_to :member
+	has_one :card_info
 	validates :name, :address, :payment_method, :phone_number, :postal,
 		presence: { message: "を入力してください" }
 	validates :name,
