@@ -4,6 +4,7 @@ class Member < ActiveRecord::Base
 	has_many :browsing_histories
 	has_many :orders
 	has_many :shopping_carts
+	validates_associated :self_information
 	validates :password,
 		presence: { message: "を入力してください" },
 		format: { with: /\A\w{1,8}\z/, allow_blank: true, message: "：半角英数1~8文字で入力してください"}
@@ -20,12 +21,13 @@ class Member < ActiveRecord::Base
 		message = ["ユーザーIDとパスワードを入力してください　", "ユーザーIDを入力してください　", "パスワードを入力してください　", "", ""]
 		i = 0
 		[user_id+password, user_id, password].map do |var|
-			break if var == "" || !var 
+			break if var == "" || !var
 			i += 1
 			message[4] = "半角英数字のみです" if i == 1 && /[^ -~｡-ﾟ]/ =~ var
 		end
 		[message[i], message[4]]
 	end
+
 
 	#def self.has_pass?(params)
 	#	if params[:password] == "" || params[:password_confirmation] == ""
