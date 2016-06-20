@@ -1,6 +1,6 @@
 class CardInfosController < ApplicationController
 	def new
-		#@self_information = SelfInformation.find_by(member_id: session[:member_id])
+		@self_information = SelfInformation.find_by(member_id: session[:member_id])
 		@card_info = CardInfo.new
 	end
 

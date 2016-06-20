@@ -2,8 +2,8 @@ class MembersController < ApplicationController
 	def index
 		session[:name] = ""
 		session[:shopping_cart_id] = -1
+		#session[:member_id] = -1
 		@id = session[:shopping_cart_id]
-
 	end
 	def new
 		@member = Member.new
@@ -13,16 +13,17 @@ class MembersController < ApplicationController
 	def create
 		@member = Member.new(member_params)
 		@member.self_information = SelfInformation.new(info_params)
-		@card_info = CardInfo.new(card_params)
+		if @member.self_information.payment_method == '3'
+			@card_info = CardInfo.create(params, @member.self_information.id)
+			@card_info.valid?
+		end
 			Member.transaction do
 				@member.save!
 				@member.self_information.save!
-				@card_info.save!
 			end
-			@card_info.self_information_id = @member.self_information.id
 			@member.user_id = Member.create_user_id
 			@member.save
-			@card_info.save
+			(CardInfo.create(params, @member.self_information.id)).save if @member.self_information.payment_method == '3'
 			flash[:msg] = "あなたのユーザーIDは、#{@member.user_id} です." 
 			session[:name] = @member.self_information.name
 		  session[:member_id] = @member.id
@@ -59,9 +60,5 @@ private
 
 	def info_params
 		params.require(:self_information).permit(:name, :address, :postal, :payment_method, :phone_number)
-	end
-
-	def card_params
-		params.require(:card_info).permit(:card_num, :deadline, :times, :code)	
 	end
 end
