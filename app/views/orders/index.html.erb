@@ -7,7 +7,6 @@
 		<tr>
 			<th></th><th>購入日</th><th>宛先名</th><th>詳細リンク</th>
 		</tr>
-
 		<% @member.orders.each_with_index do |order, i| %>
 			<% if order.decide_order == true %>
 				<tr>

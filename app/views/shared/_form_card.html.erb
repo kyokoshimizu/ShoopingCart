@@ -1,17 +1,34 @@
+<% if @card_info.errors.any? %>
+	<div id="error_explanation">
+		<ul>
+		<% @card_info.errors.full_messages.each do |msg| %>
+			<li><%= msg %></li>
+		<% end %>
+		</ul>
+	</div>
+<% end %>
+
 <br>
 <%= field_set_tag 'カード情報' do %>
 	<%= fields_for @card_info do |f| %>
 		<div class="field">
 			<%= f.label :card_num, "カード番号" %>
-			<%= f.text_field :card_num %>
+			<%= text_field_tag :a %>
+			<%= text_field_tag :b %>
+			<%= text_field_tag :c %>
+			<%= text_field_tag :d %>
 		</div>
 
 		<div class="field">
 			<%= f.label :deadline, "有効期限" %>
 			<%= f.select :deadline,
-			 { '1月' => 1, '2月' => 2, '3月' => 3 },
-			 { include_blank: '選択してください'}
-			%>
+			{ '1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '7' => 7, '8' => 8, '9' => 9, '10' => 10, '11' => 11, '12' => 12 },
+			{ include_blank: '選択してください'}
+			%>月
+			<%= f.select :deadline2,
+			{ '2016' => 1, '2017' => 2, '2018' => 3, '2019' => 4, '2020' => 5, '2021' => 6, '2022' => 7, '2023' => 8, '2024' => 9, '2025' => 10 },
+			{ include_blank: '選択してください'}
+			%>年
 		</div>
 
 		<div class="field">

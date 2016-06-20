@@ -24,7 +24,7 @@
 	<div class="field">
 		<%= f.label :payment_method, "PAYMENT" %>
 		<%= f.select( :payment_method,
-		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+		 { '代金引換' => 1, '銀行振込' => 2, 'カード払い' => 3 },
 		 { include_blank: '選択してください'},
 		 {id: 'info'}) %>
 	</div>
@@ -32,7 +32,11 @@
 	<div id='card_info'>
 	</div>
 	<br>
-
+	<div id='defo_info'>
+		<% if @change_order.payment_method == 3 %>
+			<%= render 'shared/form_card' %>
+		<% end %>
+	</div>
 	<script type="text/javascript">
 		$(document).ready(function(){
 			$('#info').change(function(){
@@ -40,7 +44,7 @@
 				if(num == 3){
 					$.get("<%= new_card_info_path %>")
 				}else{
-					$('#card_info').html("ここだぜ！");
+					$('#card_info').html("手数料がかかります！");
 				}
 			});
 		});

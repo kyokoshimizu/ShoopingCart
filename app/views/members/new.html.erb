@@ -1,40 +1,41 @@
+<%= stylesheet_link_tag "members_new", :media => "all" %>
 <h1>個人情報登録</h1>
-
-パスワード,個人情報を入力してください.
-<br>
-<% if @member.errors.any? %>
-	<div id="error_explanation">
-		<ul>
-		<% @member.errors.full_messages.each do |msg| %>
-			<% if msg == "Password confirmation doesn't match Password" %>
-				<% msg = "Password ：正しく入力してください" %>
-				<%# next if @member.password_confirmation %>
-			<% elsif msg == "Password confirmation can't be blank" %>
-				<% msg = "Password ：確認用も入力してください"%>
-			<% elsif msg == "Password can't be blank" %>
-				<% next %>
+<div class="all">
+	パスワード,個人情報を入力してください.
+	<br>
+	<% if @member.errors.any? %>
+		<div id="error_explanation">
+			<ul>
+			<% @member.errors.full_messages.each do |msg| %>
+				<% if msg == "Password confirmation doesn't match Password" %>
+					<% msg = "Password ：正しく入力してください" %>
+					<%# next if @member.password_confirmation %>
+				<% elsif msg == "Password confirmation can't be blank" %>
+					<% msg = "Password ：確認用も入力してください"%>
+				<% elsif msg == "Password can't be blank" || msg == "Self information is invalid" %>
+					<% next %>
+				<% end %>
+				<li><%= msg %></li>
 			<% end %>
-			<li><%= msg %></li>
-		<% end %>
-		</ul>
-	</div>
-<% end %>
-
-<%= form_for @member do |f| %>
-	<div class="password_field">
+			</ul>
+		</div>
+	<% end %>
+	<br>
+	<%= form_for @member do |f| %>
+		<div class="password_field">	
+			<%= f.label :password, "PASSWORD" %>
+			<%= f.password_field :password %>
+			<%= f.hidden_field :user_id %>
+		</div>
 		<br>
-		<%= f.label :password, "PASSWORD" %>
-		<%= f.password_field :password %>
-		<%= f.hidden_field :user_id %>
-	</div>
-	<br>
-	<div class="password_field">
-  	<%= f.label :password_confirmation, "パスワード再入力" %>
-   	<%= f.password_field :password_confirmation %>
-	</div>
-	
-	<br>
-	<%= render 'shared/form' %>
-	<br>
-	<%= f.submit "登録" %>
-<% end %>
+		<div class="password_field">
+	  	<%= f.label :password_confirmation, "パスワード再入力" %>
+	   	<%= f.password_field :password_confirmation %>
+		</div>
+
+		<br>
+		<%= render 'shared/form' %>
+		<br>
+		<%= f.submit "登録" %>
+	<% end %>
+</div>

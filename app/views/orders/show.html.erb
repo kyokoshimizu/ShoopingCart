@@ -1,22 +1,29 @@
-<h1><%= @name %>様の買い物詳細</h1>
+<h1><%= session[:name] %>様の買い物詳細</h1>
 <div id="info">
 	<h2>＜登録情報＞</h2>
 	宛先：<%= @order.name %>様<br>
 	住所：<%= @order.address%><br>
 	電話番号：<%= @order.phone_number %><br>
-	支払い方法：<%= @order.payment_method %><br>
+	支払い方法：<%= @payment_method %><br>
+	<%= render 'shared/card_info' if @payment_method == "カード払い" %>
+	
 </div>
-<dev id="material">
+<div id="material">
 	<h2>＜購入品＞</h2>
 	<% sum = 0 %>
 	<% @cart_details.each do |cart_detail| %>
-		・<%= cart_detail.material.title %>： <%= cart_detail.material.price %>　×　<%= cart_detail.num %>(個)　：　<%= link_to "商品詳細", material_path(cart_detail.material.id) %><br>
+		・<%= cart_detail.material.title %>： <%= Material.more_than_thousant?(cart_detail.material.price) %>　×　<%= cart_detail.num %>(個)　：　<%= link_to "商品詳細", material_path(cart_detail.material.id) %><br>
 		<% sum += (cart_detail.material.price.to_i * cart_detail.num.to_i) %>
 	<% end %>
-	<h2>合計：<%= sum %>円</h2>
-	<h2>＋税：<%= (sum * 0.08).to_i %>円</h2>
-	----------------------------------------------
-	<h2>合計金額：<%= (sum * 1.08).to_i %>円</h2>
+	<p>-----------------------------------</p>
+	<p>合計：<%= Material.more_than_thousant?(sum) %>円</p>
+	<% if @order.payment_method == 1 %>
+		<p>+ 手数料：290円</p>
+		<% sum += 290 %>
+	<% end %>
+	<p>＋税：<%= Material.more_than_thousant?((sum * 0.08).to_i) %>円</p>
+<p>-----------------------------------</p>
+<p>合計金額：<%= Material.more_than_thousant?((sum * 1.08).to_i) %>円</p>
 </div>
 <br>
 <%= link_to "戻る", orders_path %>

@@ -25,44 +25,37 @@
 	<div class="field">
 		<%= f.label :payment_method, "PAYMENT" %>
 		<%= f.select(:payment_method,
-		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+		 { '代金引換' => 1, '銀行振込' => 2, 'カード払い' => 3 },
 		 { include_blank: '選択してください'},
 		 { id: 'info'}) %>
 	</div>
 	<div id='card_info'>
 	</div>
-
-	<% if @change_order.payment_method == 3 %>
-		<%= field_set_tag 'カード情報' do %>
-			<%= fields_for @change_order.card_info do |af| %>
-				<div class="field">
-					<%= af.label :card_num, "カード番号" %>
-					<%= af.text_field :card_num %>
-				</div>
-
-				<div class="field">
-					<%= af.label :deadline, "有効期限" %>
-					<%= af.select :deadline,
-					 { '1月' => 1, '2月' => 2, '3月' => 3 },
-					 { include_blank: '選択してください'}
-					%>
-				</div>
-
-				<div class="field">
-					<%= af.label :times, "支払い区分" %>
-					<%= af.select :times,
-					 { '1割' => 1, '2回' => 2, '12回' => 3 },
-					 { include_blank: '選択してください'}
-					%>
-				</div>
-
-				<div class="field">
-					<%= af.label :code, "セキュリティコード" %>
-					<%= af.text_field :code %>
-				</div>
-			<% end %>
+	
+	<div id='defo_info'>
+		<% if @change_order.payment_method == 3 %>
+			<% @card_info = @change_order.card_info %>
+			<%= render 'shared/form_card' %>
 		<% end %>
-	<% end %>
+	</div>
+
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#info').change(function(){
+				var num = $('#info').val();
+				if(num == 3){
+					$.get("<%= new_card_info_path %>")
+					$('#defo_info').fadeOut();
+				}else if(num == 1){
+					$('#card_info').html("　手数料がかかります！");
+					$('#defo_info').fadeOut();
+				}else{
+					$('#card_info').html("");
+					$('#defo_info').fadeOut();
+				}
+			});
+		});
+	</script>
 	
 	<div class="field">
 		<%= f.label :phone_number, "PHONE_NUMBER" %>

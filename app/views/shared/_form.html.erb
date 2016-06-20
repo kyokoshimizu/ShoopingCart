@@ -24,7 +24,7 @@
 	<div class="field">
 		<%= af.label :payment_method, "PAYMENT" %>
 		<%= af.select(:payment_method,
-		 { '着払い' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+		 { '代金引換' => 1, '銀行振込' => 2, 'カード払い' => 3 },
 		 { include_blank: '選択してください'} ,
 		 {id: 'info'}) %>
 	</div>
@@ -32,6 +32,11 @@
 	<div id='card_info'>
 	</div>
 	<br>
+	<div id='defo_info'>
+		<% if @member.self_information.payment_method == '3' %>
+			<%= render 'shared/form_card' %>
+		<% end %>
+	</div>
 
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -39,8 +44,13 @@
 				var num = $('#info').val();
 				if(num == 3){
 					$.get("<%= new_card_info_path %>")
+					$('#defo_info').fadeOut();
+				}else if(num == 1){
+					$('#card_info').html("手数料がかかります！");
+					$('#defo_info').fadeOut();
 				}else{
-					$('#card_info').html("ここだぜ！");
+					$('#card_info').html("");
+					$('#defo_info').fadeOut();
 				}
 			});
 		});

@@ -22,7 +22,7 @@
 	<% @materials.each do |material| %>
 		<tr>
 			<td><%= material.title %></td>
-			<td><%= material.price %></td>
+			<td><%= Material.more_than_thousant?(material.price) %></td>
 			<td><%= material.size %></td>
 			<td><%= material.detail %></td>
 			<td><%= Category.get_category(Category.find_by(material_id: material.id).category) %></td>

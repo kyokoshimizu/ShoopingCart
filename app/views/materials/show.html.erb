@@ -2,7 +2,7 @@
 <%= image_tag photo_photo_path(@material.id) %><br>
 タイトル：<%= @material.title %>
 <br>
-値段：<%= @material.price %>円
+値段：<%= Material.more_than_thousant?(@material.price) %>円
 <br>
 サイズ：<%= @material.size %>
 <br>
