@@ -1,0 +1,10 @@
+.all{
+	margin: 0	auto 0 auto;
+	width: 900px;
+}
+
+.password_field {
+	background-color: white;
+	margin: 0	auto 0 auto;
+	width: 500px;
+}

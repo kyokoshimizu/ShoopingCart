@@ -4,6 +4,8 @@ ShoppingCartApp::Application.routes.draw do
   get "materials/create_cart"
   get "orders/register"
   get "orders/decide"
+  get "member/judge_member"
+  get "materials/not_exist"
   resources :members
   resources :self_informations
   resources :materials
@@ -12,9 +14,16 @@ ShoppingCartApp::Application.routes.draw do
   resources :categories
   resources :browsing_histories
   resources :orders
+  resources :card_infos
   resources :photos do
     member { get :photo }
   end
+  Rails.application.routes.draw do
+  resources :posts
+  root "posts#index"
+  match "*path" => "application#handle_404", via: :all
+end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
