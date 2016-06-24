@@ -13,8 +13,12 @@ class MaterialsController < ApplicationController
 
 	def show
 		@material = Material.find_by(id: params[:id])
-		if session[:name] != ""
-			BrowsingHistory.push(@material.id, session[:member_id])
+		if @material
+			if session[:name] != ""
+				BrowsingHistory.push(@material.id, session[:member_id])
+			end
+		else
+			redirect_to action: 'not_exist'
 		end
 	end
 end
