@@ -17,4 +17,15 @@ class Material < ActiveRecord::Base
 			price
 		end
 	end
+
+	def self.get_greeting
+		time = (Time.now.strftime("%H")).to_i
+		if time >= 0 && time < 11
+			"おはようございます！"
+		elsif  time >= 11 && time < 20
+			"こんにちは！"
+		else
+			"こんばんは！"
+		end
+	end
 end

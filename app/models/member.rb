@@ -63,6 +63,7 @@ private
 				end
 				ascii_num << i
 			end	
+			#@ascii_codes = ascii_num
 			ascii_num
 	end
 
