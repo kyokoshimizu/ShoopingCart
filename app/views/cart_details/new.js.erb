@@ -1,3 +1,7 @@
 $('#result').html(
-	"<% if @cart_detail.errors.any? %><ul><% @cart_detail.errors.full_messages.each do |msg| %><li><%= msg %></li><% end %></ul><% else %>追加しました!　ただいま、<%= @cart_detail.num %>個購入しました！<% end %> "
+	"<% if @cart_detail.errors.any? %><% else %>追加しました!　ただいま、<%= @cart_detail.num %>個購入しました！<% end %> "
+	);
+
+$('#has_error').html(
+	"<% if @cart_detail.errors.any? %>99個までしか選択できません<% end %> "
 	);

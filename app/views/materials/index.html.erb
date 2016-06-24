@@ -3,7 +3,7 @@
 <% if session[:name] != "" %>
 <%= session[:name] %>さん
 <% end %>
-こんにちは！
+<%= Material.get_greeting %>
 <p id="msg"><%= flash[:msg] %></p>
 <div class="field">
 	<%= form_tag({controller: :materials}, method: :get, id: :category) do%>
@@ -36,7 +36,7 @@
 		<%= link_to "閲覧履歴ページ", browsing_histories_path %>
 	</div>
 	<div class="field">
-		<%= link_to "購入履歴ページ", orders_path %>
+		<%= link_to "購入履歴ページ", orders_path(:id => 0) %>
 	</div>
 	<div class="field">
 		<%= link_to "個人情報変更", edit_self_information_path(@info_id) %>

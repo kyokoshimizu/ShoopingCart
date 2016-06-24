@@ -1,25 +1,35 @@
-<h1>過去の買い物履歴</h1>
+<h1>購入履歴</h1>
 
 <% if !@member.orders[0] %>
 	まだ一度も買い物してないでする
 <% else %>
+<% not_finished = 0 %>
 	<table border="1">
 		<tr>
 			<th></th><th>購入日</th><th>宛先名</th><th>詳細リンク</th>
 		</tr>
-		<% @member.orders.each_with_index do |order, i| %>
+		<% @member.orders[@num*10+@difference..(@member.orders.size)-1].each_with_index do |order, i| %>
 			<% if order.decide_order == true %>
+				<% break if i-not_finished >= 10 %>
 				<tr>
-					<td><%= i+1 %>.</td>
+					<td><%= @num*10+(i+1-not_finished) %>.</td>
 					<td>　<%= order.created_at.strftime('%Y年%m月%d日 %H:%M') %>　</td>
 					<td>　<%= order.name%>様　</td>
 					<td>　<%= link_to "詳細", order_path(order.id) %>　</td>
 				</tr>
+			<% else %>
+				<% not_finished += 1 %>
 			<% end %>
 		<% end %>
 	</table>
-<% end %>
 
+<div>
+<% num = 10*(@num+1) %>
+<% if (@member.orders.size-not_finished)/num != 0 %>
+	<%= link_to "次へ", orders_path(id: @num+1, difference: not_finished) %>
+<% end %>
+</div>
+<% end %>
 <div>
 	<%= link_to "戻る", materials_path %>
 </div>

@@ -23,13 +23,13 @@
 	<br>
 	<%= form_for @member do |f| %>
 		<div class="password_field">	
-			<%= f.label :password, "PASSWORD" %>
+			<%= f.label :password, "Password" %>
 			<%= f.password_field :password %>
 			<%= f.hidden_field :user_id %>
 		</div>
 		<br>
 		<div class="password_field">
-	  	<%= f.label :password_confirmation, "パスワード再入力" %>
+	  	<%= f.label :password_confirmation, "Re_enter" %>
 	   	<%= f.password_field :password_confirmation %>
 		</div>
 

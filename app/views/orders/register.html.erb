@@ -1,5 +1,6 @@
 <h1>登録確認ページ</h1>
 <h2>あなたの購入リスト</h2>
+<p id="notice"><%= notice %></p>
 <% sum = 0 %>
 	<% @materials.each do |material| %>
 		<div id='field'>
@@ -22,7 +23,7 @@
 	<p>まだ何も頼んでないですよ</p>
 <% else %>
 	<% if !@order.name %>
-		<%= link_to "支払い方法登録", new_order_path %>
+		<%= link_to "送り先登録", new_order_path %>
 	<% else %>
 		<h2>購入方法</h2>
 		名前：　<%= @order.name %><br>
