@@ -27,9 +27,9 @@
 			</tr>
 		<% end %>
 	</table>
-	合計金額: <span id='sum'><%= Material.more_than_thousant?(sum) %></span> 円
+	<p class="cost">合計金額: <span id='sum'><%= Material.more_than_thousant?(sum) %></span> 円</p>
 	<br>
-<div class="field">
-	<%= link_to "登録確認ページ", controller: :orders, action: :register %>
-	<%= link_to "商品一覧ページ", materials_path %>
-</div>
+<ul>
+	<li><%= link_to "登録確認ページ", controller: :orders, action: :register %></li>
+	<li><%= link_to "商品一覧ページ", materials_path %></li>
+</ul>

@@ -2,7 +2,6 @@ class MembersController < ApplicationController
 	def index
 		session[:name] = ""
 		session[:shopping_cart_id] = -1
-		#session[:member_id] = -1
 		@id = session[:shopping_cart_id]
 	end
 	def new
@@ -20,16 +19,17 @@ class MembersController < ApplicationController
 			Member.transaction do
 				@member.save!
 				@member.self_information.save!
+				@card_info.save! if @member.self_information.payment_method == '3'
 			end
 			@member.user_id = Member.create_user_id
-			@member.save
+		  if @member.self_information.payment_method == '3'
+				@card_info.self_information_id = Member.find(@member.user_id).self_information.id
+		  	@card_info.save
+		  end
+		  @member.save
 			flash[:msg] = "あなたのユーザーIDは、#{@member.user_id} です." 
 			session[:name] = @member.self_information.name
 		  session[:member_id] = @member.id
-		  if @member.self_information.payment_method == '3'
-		  	@card_info.self_information_id = Member.find(session[:member_id]).self_information.id
-		  	@card_info.save
-		  end
 		  redirect_to materials_path
 		rescue => e
 			render 'new'

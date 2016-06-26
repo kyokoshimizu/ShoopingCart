@@ -1,10 +1,27 @@
-.all{
+h3 {
+	 text-align: center; 
+}
+
+.all {
 	margin: 0	auto 0 auto;
 	width: 900px;
 }
 
 .password_field {
+	margin: 0	auto 0 auto;
+	padding: 0 20px 0 20px;
+	width: 500px;
 	background-color: white;
+}
+
+.field {
+	padding: 0 20px 0 20px;
+	margin: 0	auto 0 auto;
+	width: 500px;
+	background-color: white;
+}
+
+.action{
 	margin: 0	auto 0 auto;
 	width: 500px;
 }

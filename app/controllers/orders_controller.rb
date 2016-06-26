@@ -7,8 +7,12 @@ class OrdersController < ApplicationController
 	def register
 		@materials = ShoppingCart.selected_matelials(session[:shopping_cart_id])
 		@order, @path = Order.get_order(session[:name], session[:shopping_cart_id], session[:member_id])
-		if @order.name #session[:name] != ""
+		if @order.name
 			@payment_method = Order.get_method(@order.payment_method)
+			#if @payment_method == "カード払い" && !@order.id  && !CardInfo.find_by(sefl_information_id: (Member.find(session[:member_id]).self_information).id)
+			#	flash[:notice] = "カード情報をきちんと入力してください"
+			#	redirect_to action: 'edit'
+			#end
 		end
 		@cart_details = CartDetail.where(shopping_cart_id: session[:shopping_cart_id])
 	end
@@ -37,20 +41,19 @@ class OrdersController < ApplicationController
 			@card_info.valid?
 		end
 		if @change_order.save
-			if @change_order.payment_method == 3
+			if @change_order.payment_method == 3 &&  !@card_info.errors
 				@card_info.order_id = @change_order.id
 				@card_info.save
+				redirect_to action: :register
 			end
-			redirect_to action: :register
-		else
-			render 'new'
 		end
+			render 'new'
 	end
 
 	def update
 		@change_order = Order.find(params[:id])
 		if @change_order.update(order_params)
-			CardInfo.re_create_order(params, params[:id]) if @change_order.payment_method == 3
+			@card_info = CardInfo.re_create_order(params, params[:id]) if @change_order.payment_method == 3
 			redirect_to action: 'register'
 		else
 			render 'edit'
@@ -67,7 +70,7 @@ class OrdersController < ApplicationController
 		end
 		if order.payment_method == 3 && ( !CardInfo.check_info(self_information_id, order_id) || !CardInfo.check_deadline(self_information_id, order_id) )
 			flash[:notice] = "カード情報に誤りがあります"
-			redirect_to action: 'register'#controller: :members, action: 'error_page'
+			redirect_to action: 'register'
 		else
 			order.decide_order = true
 			order.save

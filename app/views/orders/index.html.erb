@@ -3,7 +3,7 @@
 <% if !@member.orders[0] %>
 	まだ一度も買い物してないでする
 <% else %>
-<% not_finished = 0 %>
+	<% not_finished = 0 %>
 	<table border="1">
 		<tr>
 			<th></th><th>購入日</th><th>宛先名</th><th>詳細リンク</th>
@@ -22,14 +22,14 @@
 			<% end %>
 		<% end %>
 	</table>
-
-<div>
-<% num = 10*(@num+1) %>
-<% if (@member.orders.size-not_finished)/num != 0 %>
-	<%= link_to "次へ", orders_path(id: @num+1, difference: not_finished) %>
+	<div class="page">
+		<% num = 10*(@num+1) %>
+		<% if (@member.orders.size-not_finished)/num != 0 %>
+		<%= link_to "次へ", orders_path(id: @num+1, difference: not_finished) %>
+		<% end %>
+		<%= link_to "戻る", orders_path if @num != 0 %>
+	</div>
 <% end %>
-</div>
-<% end %>
-<div>
-	<%= link_to "戻る", materials_path %>
-</div>
+<ul>
+	<li><%= link_to "商品一覧ページ", materials_path %></li>
+</ul>

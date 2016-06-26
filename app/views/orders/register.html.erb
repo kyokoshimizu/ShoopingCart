@@ -2,45 +2,56 @@
 <h2>あなたの購入リスト</h2>
 <p id="notice"><%= notice %></p>
 <% sum = 0 %>
-	<% @materials.each do |material| %>
-		<div id='field'>
-			<% cart_detail = @cart_details.find_by(material_id: material.id) %>
-			・<%= material.title %>　=>　<%= Material.more_than_thousant?(material.price) %>円　×　<%= cart_detail.num %><br>
-		</div>
-		<% sum += (material.price * cart_detail.num) %>
-	<% end %>
-<p>-----------------------------------</p>
-<p>合計：<%= Material.more_than_thousant?(sum) %>円</p>
-<% if @order.payment_method == 1 && sum > 0 %>
-	<p>+ 手数料：290円</p>
-	<% sum += 290 %>
-<% end %>
-<p>+ 税：<%= Material.more_than_thousant?((sum * 0.08).to_i) %>円</p>
-<p>-----------------------------------</p>
-<p>合計金額：<%= Material.more_than_thousant?((sum * 1.08).to_i) %>円</p>
-
-<% if sum == 0 %>
-	<p>まだ何も頼んでないですよ</p>
-<% else %>
-	<% if !@order.name %>
-		<%= link_to "送り先登録", new_order_path %>
-	<% else %>
-		<h2>購入方法</h2>
-		名前：　<%= @order.name %><br>
-		住所：　<%= @order.address %><br>
-		支払い方法：　<%= @payment_method %><br>
-		<% if @payment_method == "カード払い" %>
-		 	<% if !@order.id %>
-		 		<% self_information = SelfInformation.find_by(member_id: @order.member_id) %>
-		 		<% @order.card_info = self_information.card_info %>
-			<% end %>
-			<%= render 'shared/card_info' %>
+	<table>
+		<% @materials.each do |material| %>
+			<tr>
+				<% cart_detail = @cart_details.find_by(material_id: material.id) %>
+				<th><%= material.title %></th><td>　<%= Material.more_than_thousant?(material.price) %>円　×　<%= cart_detail.num %><td>
+			</tr>
+			<% sum += (material.price * cart_detail.num) %>
 		<% end %>
-		電話番号：　<%= @order.phone_number %><br>
-		<%= link_to "購入確定", action: 'decide' %>
+	</table>
+<div class="order">
+	<p class="border"></p>
+	<p>合計：<%= Material.more_than_thousant?(sum) %>円</p>
+	<% if @order.payment_method == 1 && sum > 0 %>
+		<p>+ 手数料：290円</p>
+		<% sum += 290 %>
 	<% end %>
-	<br>
-	<% if session[:name] != "" %>
+	<p>+ 税：<%= Material.more_than_thousant?((sum * 0.08).to_i) %>円</p>
+	<p class="border"></p>
+	<p>合計金額：<%= Material.more_than_thousant?((sum * 1.08).to_i) %>円</p>
+</div>
+	<% if sum == 0 %>
+		<h2>まだ何も頼んでないですよ</h2>
+	<% else %>
+		<% if !@order.name %>
+			<%= link_to "送り先登録", new_order_path %>
+		<% else %>
+			<h2>購入方法</h2>
+			<table>
+				<tr>
+					<th>名前</th><td>　<%= @order.name %></td>
+				</tr><tr>
+					<th>住所</th><td>　<%= @order.address %></td>
+				</tr><tr>
+					<th>電話番号</th><td>　<%= @order.phone_number %></td>
+				</tr><tr>
+					<th>支払い方法</th><td>　<%= @payment_method %></td>
+				</tr>
+			</table>
+			<div class="info">
+			<% if @payment_method == "カード払い" %>
+			 	<% if !@order.id %>
+			 		<% self_information = SelfInformation.find_by(member_id: @order.member_id) %>
+			 		<% @order.card_info = self_information.card_info %>
+				<% end %>
+				<%= render 'shared/card_info' %>
+			<% end %>
+			</div>
+			<%= link_to "購入確定", action: 'decide' %>
+		<% end %>
+		<% if session[:name] != "" %>
 		<%= link_to "送り先変更", @path %>
 	<% end %>
 <% end %>

@@ -4,13 +4,12 @@ body{
 	font-family: "ＭＳ Ｐゴシック";
 }
 
-h1 {
-	 text-align: center; 
-	 }
+h1, h2 {
+	text-align: center; 
+}
 
 .field_left {
-	margin: 0;
-	padding: 0;
+	padding: 0 30 30 30;
 	position: absolute;
 	top: 75px;
 	width: 50%;
@@ -18,19 +17,17 @@ h1 {
 }
 
 .field_right {
-	margin: 0;
-	padding: 0;
+	padding: 0 30 30 30;
 	position: absolute;
 	left: 50%;
-	top: 50px;
+	top: 75px;
 	width: 50%;
 	text-align: center;
 }
 
 .field_under{
-	margin: 0;
-	top: 50%;
-/*	left: 30%; */
+	padding: 30 30 30 30;
+	top: 300px;
 	position: absolute;
 	width: 50%;
 	text-align: center;
@@ -39,10 +36,10 @@ h1 {
 .inner{
 	position: absolute;
 	padding: 20px;
-	border: #DB7093 dashed 1px;
+	border: #D8BFD8 dashed 2px;
 	background-color: white;
 	width: 70%;
-	left: 50px;
+	left: 70px;
 }
 
 .link {

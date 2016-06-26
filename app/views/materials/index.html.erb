@@ -1,20 +1,23 @@
 <%= stylesheet_link_tag "members_index", :media => "all" %>
 <h1>商品一覧</h1>
-<% if session[:name] != "" %>
-<%= session[:name] %>さん
-<% end %>
-<%= Material.get_greeting %>
-<p id="msg"><%= flash[:msg] %></p>
-<div class="field">
+<div class="greeting">
+	<% if session[:name] != "" %>
+	<%= session[:name] %>さん
+	<% end %>
+	<%= Material.get_greeting %>
+	<p id="msg"><%= flash[:msg] %></p>
+</div>
+
+<div class="category">
 	<%= form_tag({controller: :materials}, method: :get, id: :category) do%>
 		<%= select_tag :category, options_for_select({ Category.get_category(0) => 0, Category.get_category(1) => 1, Category.get_category(2) => 2 }, params[:category]) %>
 	  <%= submit_tag '検索' %>
 	<% end %>
 </div>
-<div class="field">
+<div class="sc_link">
 	<%= link_to "SCページへ", shopping_carts_path %>
 </div>
-<table border="1">
+<table border="2">
 	<tr>
 		<th>タイトル</th><th>価格(税抜)</th><th>サイズ</th><th>詳細</th><th>カテゴリ</th><th>リンク</th>
 	</tr>
@@ -32,13 +35,9 @@
 </table>
 
 <% if session[:name] != "" %>
-	<div class="field">
-		<%= link_to "閲覧履歴ページ", browsing_histories_path %>
-	</div>
-	<div class="field">
-		<%= link_to "購入履歴ページ", orders_path(:id => 0) %>
-	</div>
-	<div class="field">
-		<%= link_to "個人情報変更", edit_self_information_path(@info_id) %>
-	</div>
+	<ul>
+		<li><%= link_to "閲覧履歴ページ", browsing_histories_path %></li>
+		<li><%= link_to "購入履歴ページ", orders_path(:id => 0) %></li>
+		<li><%= link_to "個人情報変更", edit_self_information_path(@info_id) %></li>
+	</ul>
 <% end %>

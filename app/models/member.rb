@@ -28,17 +28,6 @@ class Member < ActiveRecord::Base
 		[message[i], message[4]]
 	end
 
-
-	#def self.has_pass?(params)
-	#	if params[:password] == "" || params[:password_confirmation] == ""
-	#		false
-	#	elsif params[:password] != params[:password_confirmation]
-	#		false
-	#	else
-	#		true
-	#	end
-	#end
-
 	def self.create_user_id
 		user_id = ""
 		loop do
@@ -63,7 +52,6 @@ private
 				end
 				ascii_num << i
 			end	
-			#@ascii_codes = ascii_num
 			ascii_num
 	end
 

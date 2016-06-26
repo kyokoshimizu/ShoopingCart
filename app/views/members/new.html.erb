@@ -1,8 +1,7 @@
 <%= stylesheet_link_tag "members_new", :media => "all" %>
 <h1>個人情報登録</h1>
 <div class="all">
-	パスワード,個人情報を入力してください.
-	<br>
+	<h3>パスワード,個人情報を入力してください.</h3>
 	<% if @member.errors.any? %>
 		<div id="error_explanation">
 			<ul>
@@ -29,13 +28,14 @@
 		</div>
 		<br>
 		<div class="password_field">
-	  	<%= f.label :password_confirmation, "Re_enter" %>
+	  	<%= f.label :password_confirmation, "Password_conf" %>
 	   	<%= f.password_field :password_confirmation %>
 		</div>
 
 		<br>
 		<%= render 'shared/form' %>
-		<br>
-		<%= f.submit "登録" %>
+		<div class="action">
+			<%= f.submit "登録" %>
+		</div>
 	<% end %>
 </div>

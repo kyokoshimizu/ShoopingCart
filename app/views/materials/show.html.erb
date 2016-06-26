@@ -1,16 +1,29 @@
+<%= stylesheet_link_tag "materials_index", :media => "all" %>
+
 <h1>商品ページ</h1>
-<%= image_tag photo_photo_path(@material.id) %><br>
-タイトル：<%= @material.title %>
-<br>
-値段：<%= Material.more_than_thousant?(@material.price) %>円
-<br>
-サイズ：<%= @material.size %>
-<br>
-詳細：<%= @material.detail %>
-<br>
-<div id='has_error'></div>
-<%= link_to "SCヘイレル！", new_cart_detail_path(id: params[:id]), remote: true %>
-<br>
-<div id='result'></div>
-<%= link_to "商品一覧ページ", materials_path %>
-<%= link_to "ショッピングカートページ", shopping_carts_path %>
+
+<div class="material">
+	<%= image_tag photo_photo_path(@material.id) %><br>
+	<br>
+	<table class="order">
+	<tr>
+		<th>タイトル</th><td><%= @material.title %></td>
+	</tr><tr>
+		<th>値段</th><td><%= Material.more_than_thousant?(@material.price) %>円</td>
+	</tr><tr>
+		<th>サイズ</th><td><%= @material.size %></td>
+	</tr><tr>
+		<th>詳細</th><td><%= @material.detail %></td>
+	</tr>
+	</table>
+	<div id='has_error'></div>
+	<br>
+	<%= link_to "SCヘイレル！", new_cart_detail_path(id: params[:id]), remote: true %>
+	<br>
+	<div id='result'></div>
+</div>
+
+<ul>
+	<li><%= link_to "商品一覧ページ", materials_path %></li>
+	<li><%= link_to "ショッピングカートページ", shopping_carts_path %></li>
+</ul>

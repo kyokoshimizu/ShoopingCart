@@ -1,6 +1,8 @@
+<%= stylesheet_link_tag "browsing_index", :media => "all" %>
+
 <h1>過去の閲覧履歴</h1>
 <% num = 1 %>
-<table border="1">
+<table border="1" class="browsing">
 	<tr>
 		<th></th><th>閲覧日</th><th>タイトル</th><th>価格</th><th>サイズ</th><th>詳細</th><th>リンク</th>
 	</tr>
@@ -17,5 +19,6 @@
 		<% num += 1 %>
 	<% end %>
 </table>
-
-<%= link_to "商品一覧ページ", materials_path %>
+<ul>
+	<li><%= link_to "商品一覧ページ", materials_path %></li>
+</ul>
