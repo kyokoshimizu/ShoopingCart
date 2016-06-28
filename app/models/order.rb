@@ -44,4 +44,13 @@ class Order < ActiveRecord::Base
 		method[num - 1]
 	end
 
+	def self.get_path(shopping_cart_id)
+		path = [:members, 'register']
+		if shopping_cart_id == -1
+			path[1] = :index
+		else
+			path[0] = :orders
+		end
+		path
+	end
 end

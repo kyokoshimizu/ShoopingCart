@@ -1,8 +1,13 @@
 class OrdersController < ApplicationController
 	def index
-		@member = Member.find(session[:member_id])
-		@num = params[:id].to_i
-		@difference = params[:difference].to_i
+		if session[:name] == ""
+			path = Order.get_path(session[:shopping_cart_id])
+			redirect_to controller: path[0], action: path[1] 
+		else
+			@member = Member.find(session[:member_id])
+			@num = params[:id].to_i
+			@difference = params[:difference].to_i
+		end
 	end
 	def register
 		@materials = ShoppingCart.selected_matelials(session[:shopping_cart_id])
@@ -18,14 +23,18 @@ class OrdersController < ApplicationController
 	end
 
 	def show
-		render 'members/error_page' if Order.find_by(id: params[:id]).class == NilClass || !Order.check_member(Order.find(params[:id]), session[:member_id])		
+		render 'members/error_page' if !Order.check_member(Order.find(params[:id]), session[:member_id])		
 		@order = Order.find(params[:id])
 		@cart_details = CartDetail.where(shopping_cart_id: @order.shopping_cart_id)
 		@payment_method = Order.get_method(@order.payment_method)
 	end
 
 	def new
-		@change_order = Order.new
+		if Order.find_by(shopping_cart_id: session[:shopping_cart_id])
+			redirect_to edit_order_path(Order.find_by(shopping_cart_id: session[:shopping_cart_id]).id)
+		else
+			@change_order = Order.new
+		end	
 	end
 
 	def edit
@@ -41,13 +50,19 @@ class OrdersController < ApplicationController
 			@card_info.valid?
 		end
 		if @change_order.save
-			if @change_order.payment_method == 3 &&  !@card_info.errors
+			judge = true
+			if @change_order.payment_method == 3 && (@card_info.errors).size == 0
 				@card_info.order_id = @change_order.id
 				@card_info.save
-				redirect_to action: :register
+			elsif @change_order.payment_method == 3
+				judge = false
 			end
 		end
+		if judge
+			redirect_to action: 'register'
+		else
 			render 'new'
+		end
 	end
 
 	def update

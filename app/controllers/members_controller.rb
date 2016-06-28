@@ -2,11 +2,22 @@ class MembersController < ApplicationController
 	def index
 		session[:name] = ""
 		session[:shopping_cart_id] = -1
+		session[:member_id] = ""
 		@id = session[:shopping_cart_id]
 	end
 	def new
+		redirect_to edit_self_information_path(Member.find(session[:member_id]).self_information.id) if session[:name] != ""
 		@member = Member.new
 		@member.self_information = SelfInformation.new
+	end
+
+	def check_id
+		if session[:member_id] != ""
+			session[:shopping_cart_id] = -1
+			session[:member_id] = ""
+			session[:name] = ""
+		end
+		redirect_to materials_path
 	end
 
 	def create
@@ -28,6 +39,7 @@ class MembersController < ApplicationController
 		  end
 		  @member.save
 			flash[:msg] = "あなたのユーザーIDは、#{@member.user_id} です." 
+			session[:shopping_cart_id] = -1
 			session[:name] = @member.self_information.name
 		  session[:member_id] = @member.id
 		  redirect_to materials_path
@@ -36,6 +48,7 @@ class MembersController < ApplicationController
 	end
 
 	def judge_member
+		session[:shopping_cart_id] = -1
 		user_id = params[:user_id]
 		password = params[:password]
 		has_blank, has_em = Member.has_error(user_id, password)
