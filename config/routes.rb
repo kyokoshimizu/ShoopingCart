@@ -6,6 +6,7 @@ ShoppingCartApp::Application.routes.draw do
   get "orders/decide"
   get "member/judge_member"
   get "materials/not_exist"
+  get "members/check_id"
   resources :members
   resources :self_informations
   resources :materials
