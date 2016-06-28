@@ -12,12 +12,13 @@ class Order < ActiveRecord::Base
 	validates :address,
 		presence: { message: "を入力してください" },
 		length: { maximum: 30, allow_blank: true, message: "：そんなに長い住所はダメです" }
-	validates :payment_method,
-		presence: { message: "を入力してください" },
-		numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 3, allow_blank: true, message: 'のところで変なことをしないでください' }
 	validates :phone_number,
 		presence: { message: "を入力してください" },
 		format: { with: /\A\d{10,13}\z/, allow_blank: true, message: "：半角数字で10〜13文字で記入してください" }
+	validates :payment_method,
+		presence: { message: "を入力してください" },
+		numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 3, allow_blank: true, message: 'のところで変なことをしないでください' }
+
 	
 	def self.get_order(name, id, member_id)
 		order = Order.find_by(shopping_cart_id: id)

@@ -5,6 +5,6 @@ class CardInfosController < ApplicationController
 	end
 
 	def edit
-		@card_info = CardInfo.find_by(self_information_id: params[:id])
+		p @card_info = CardInfo.find_by(self_information_id: params[:id])
 	end
 end

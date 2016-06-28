@@ -39,36 +39,43 @@ class OrdersController < ApplicationController
 
 	def edit
 		@change_order = Order.find(params[:id])
+		@card_info ||= CardInfo.find_by(order_id: params[:id])
 	end
 
 	def create
-		member_id = Member.find_member(session[:member_id], session[:name])
-		@change_order = Order.new(order_params)
-		@change_order.shopping_cart_id, @change_order.member_id = session[:shopping_cart_id], member_id
-		if @change_order.payment_method == 3
-			@card_info = CardInfo.new(card_params(params))
-			@card_info.valid?
-		end
-		if @change_order.save
-			judge = true
-			if @change_order.payment_method == 3 && (@card_info.errors).size == 0
-				@card_info.order_id = @change_order.id
-				@card_info.save
-			elsif @change_order.payment_method == 3
-				judge = false
-			end
-		end
-		if judge
-			redirect_to action: 'register'
+		if Order.find_by(shopping_cart_id: session[:shopping_cart_id])
+			redirect_to edit_order_path(Order.find_by(shopping_cart_id: session[:shopping_cart_id]).id)
 		else
-			render 'new'
-		end
+			judge = true
+			member_id = Member.find_member(session[:member_id], session[:name])
+			@change_order = Order.new(order_params)
+			@change_order.shopping_cart_id, @change_order.member_id = session[:shopping_cart_id], member_id
+			if @change_order.payment_method == 3
+				@card_info = CardInfo.new(card_params(params))
+				@card_info.save
+				@card_info.valid?
+				judge = (@card_info.errors).size == 0
+			end
+
+			if @change_order.save && judge
+				CardInfo.update_id(@change_order, @card_info) if @change_order.payment_method == 3
+				redirect_to action: 'register'
+			else
+				render 'new'
+			end
+		end	
 	end
 
 	def update
 		@change_order = Order.find(params[:id])
-		if @change_order.update(order_params)
-			@card_info = CardInfo.re_create_order(params, params[:id]) if @change_order.payment_method == 3
+		judge = true
+		if @change_order.payment_method == 3
+			@card_info = CardInfo.re_create_order(params, params[:id])
+			judge = @card_info.valid?
+		end
+
+		if @change_order.update(order_params) && judge
+			#@card_info.save
 			redirect_to action: 'register'
 		else
 			render 'edit'

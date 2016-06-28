@@ -2,6 +2,7 @@
 	<div id="error_explanation">
 		<ul class="links">
 		<% @member.self_information.errors.full_messages.each do |msg| %>
+			<% msg.gsub!("Postal", "Postal code") %>
 			<li><%= msg %></li>
 		<% end %>
 		</ul>
@@ -17,7 +18,7 @@
 	</span>
 	<br>
 	<span class="label">
-		<%= af.label :postal, "Postal_code" %>
+		<%= af.label :postal, "Postal code" %>
 	</span>
 	<span class="form">
 		<%= af.text_field :postal %>
@@ -31,14 +32,14 @@
 	</span>
 	<br>
 	<span class="label">
-		<%= af.label :phone_number, "Phone_number" %>
+		<%= af.label :phone_number, "Phone number" %>
 	</span>
 	<span class="form">
 		<%= af.text_field :phone_number %>
 	</span>
 	<br>
 	<span class="label">
-		<%= af.label :payment_method, "Payment_method" %>
+		<%= af.label :payment_method, "Payment method" %>
 	</span>
 	<span class="form">
 		<%= af.select(:payment_method,
@@ -64,7 +65,7 @@
 					$.get("<%= new_card_info_path %>")
 					$('#defo_info').fadeOut();
 				}else if(num == 1){
-					$('#card_info').html("手数料がかかります！");
+					$('#card_info').html("<p class='pay'>手数料がかかります！</p>");
 					$('#defo_info').fadeOut();
 				}else{
 					$('#card_info').html("");

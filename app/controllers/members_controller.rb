@@ -33,11 +33,10 @@ class MembersController < ApplicationController
 				@card_info.save! if @member.self_information.payment_method == '3'
 			end
 			@member.user_id = Member.create_user_id
+			@member.save
 		  if @member.self_information.payment_method == '3'
-				@card_info.self_information_id = Member.find(@member.user_id).self_information.id
-		  	@card_info.save
+				@card_info.self_information_id = (Member.find(@member.id)).self_information.id
 		  end
-		  @member.save
 			flash[:msg] = "あなたのユーザーIDは、#{@member.user_id} です." 
 			session[:shopping_cart_id] = -1
 			session[:name] = @member.self_information.name

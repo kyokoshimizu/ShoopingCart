@@ -21,6 +21,7 @@ class CartDetail < ActiveRecord::Base
 		error_message = ""
 		if cart_detail.errors.any?
 			cart_detail.errors.full_messages.each do |msg|
+				msg.gsub!("Num", "個数")
 				msg = "・削除ボタンを押してください\n" if cart_detail.num == 0
 				error_message += msg
 			end

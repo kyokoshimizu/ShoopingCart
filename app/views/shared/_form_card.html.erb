@@ -3,8 +3,10 @@
 <br>
 <% if @card_info.errors.any? %>
 	<div id="error_exspanlanation">
-		<ul>
+		<ul class="links">
 		<% @card_info.errors.full_messages.each do |msg| %>
+			<% next if msg.include?("Deadline2") %>
+			<% CardInfo.change_style(msg) %>
 			<li><%= msg %></li>
 		<% end %>
 		</ul>

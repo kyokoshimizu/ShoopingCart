@@ -26,9 +26,11 @@ class CardInfo < ActiveRecord::Base
 		if CardInfo.find_by(order_id: id)
 			card_info = CardInfo.find_by(order_id: id)
 			card_info.update(card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], order_id: id )
+			card_info
 		else
 			card_info = CardInfo.new(card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], order_id: id )
 			card_info.save
+			card_info
 		end
 	end
 
@@ -63,6 +65,20 @@ class CardInfo < ActiveRecord::Base
     else
     	true
     end
+	end
+
+	def self.change_style(msg)
+		msg.gsub!("Card num", "カード番号")
+		msg.gsub!("Deadline", "有効期限")
+		msg.gsub!("Times", "支払い区分")
+		msg.gsub!("Code", "セキュリティコード")
+	end
+
+	def self.update_id(order, card_info)
+		if order.payment_method == 3
+			card_info.order_id = order.id
+			card_info.save
+		end
 	end
 
 private

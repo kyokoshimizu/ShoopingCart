@@ -1,14 +1,14 @@
 <%= stylesheet_link_tag "members_new", :media => "all" %>
 <h1>個人情報登録</h1>
 <h3>パスワード,個人情報を入力してください.</h3>
-	<div class="all">
+<div class="all">
+	<br>
 	<% if @member.errors.any? %>
 		<div id="error_explanation">
 			<ul class="links">
 			<% @member.errors.full_messages.each do |msg| %>
 				<% if msg == "Password confirmation doesn't match Password" %>
 					<% msg = "Password ：正しく入力してください" %>
-					<%# next if @member.password_confirmation %>
 				<% elsif msg == "Password confirmation can't be blank" %>
 					<% msg = "Password ：確認用も入力してください"%>
 				<% elsif msg == "Password can't be blank" || msg == "Self information is invalid" %>
@@ -28,19 +28,17 @@
 			<%= f.password_field :password %>
 			<%= f.hidden_field :user_id %>
 		</span>
-	
-	<br>
-	<span class="label">
-  	<%= f.label :password_confirmation, "Password_conf" %>
-  </span>
-  <span class="form">
-   	<%= f.password_field :password_confirmation %>
-	</span>
-
-	<br>
-	<%= render 'shared/form' %>
-	</div>
-	<div class="action">
-		<%= f.submit "登録" %>
-	</div>
-<% end %>
+		<br>
+		<span class="label">
+	  	<%= f.label :password_confirmation, "Password_conf" %>
+	  </span>
+	  <span class="form">
+	   	<%= f.password_field :password_confirmation %>
+		</span>
+		<br>
+		<%= render 'shared/form' %>
+		<div class="action">
+			<%= f.submit "登録" %>
+		</div>
+	<% end %>
+</div>
