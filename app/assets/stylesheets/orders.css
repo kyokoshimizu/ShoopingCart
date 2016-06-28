@@ -7,7 +7,7 @@
 }
 
 fieldset {
-	margin: 20px 40% 0 5%;
+	margin: 20px 5% 0 5%;
 	border-color: #D8BFD8;
 }
 
@@ -32,4 +32,9 @@ table.order {
 
 table.order th{
 	width: 150px;
+}
+
+.show {
+	width: 60%;
+	padding-bottom: 50px;
 }

@@ -4,10 +4,12 @@
 <% else %>
 	<% card_info = @order.card_info %>
 <% end %>
+<div class="show">
 <%= field_set_tag 'カード情報' do %>
 　カード番号：<%= card_info.card_num %><br>
 　有効期限：<%= card_info.deadline %>月　<%= CardInfo.get_deadline2(card_info.deadline2) %>年<br>
 　支払区分：<%= CardInfo.get_times(card_info.times) %><br>
 　セキュリティコード：<%= card_info.code %><br>
 <% end %>
+</div>
 <br>

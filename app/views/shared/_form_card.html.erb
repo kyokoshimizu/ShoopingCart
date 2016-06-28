@@ -1,5 +1,8 @@
+<%= stylesheet_link_tag "members_new", :media => "all" %>
+
+<br>
 <% if @card_info.errors.any? %>
-	<div id="error_explanation">
+	<div id="error_exspanlanation">
 		<ul>
 		<% @card_info.errors.full_messages.each do |msg| %>
 			<li><%= msg %></li>
@@ -30,7 +33,6 @@
 			{ include_blank: '選択してください'}
 			%>年
 		</div>
-
 		<div class="field">
 			<%= f.label :times, "支払い区分" %>
 			<%= f.select :times,
@@ -38,10 +40,10 @@
 			 { include_blank: '選択してください'}
 			%>
 		</div>
-
 		<div class="field">
 			<%= f.label :code, "セキュリティコード" %>
 			<%= f.text_field :code %>
 		</div>
+		<br>
 	<% end %>
 <% end %>

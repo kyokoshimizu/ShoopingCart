@@ -35,9 +35,9 @@
 </table>
 
 <% if session[:name] != "" %>
-	<ul>
-		<li><%= link_to "閲覧履歴ページ", browsing_histories_path %></li>
-		<li><%= link_to "購入履歴ページ", orders_path(:id => 0) %></li>
-		<li><%= link_to "個人情報変更", edit_self_information_path(@info_id) %></li>
+	<ul class="links">
+		<li class="links"><%= link_to "閲覧履歴ページ", browsing_histories_path %></li>
+		<li class="links"><%= link_to "購入履歴ページ", orders_path(:id => 0) %></li>
+		<li class="links"><%= link_to "個人情報変更", edit_self_information_path(@info_id) %></li>
 	</ul>
 <% end %>

@@ -1,6 +1,6 @@
 <% if @member.self_information.errors.any? %>
 	<div id="error_explanation">
-		<ul>
+		<ul class="links">
 		<% @member.self_information.errors.full_messages.each do |msg| %>
 			<li><%= msg %></li>
 		<% end %>
@@ -9,27 +9,43 @@
 <% end %>
 
 <%= fields_for @member.self_information do |af| %>
-	<div class="field">
+	<span class="label">
 		<%= af.label :name, "Name" %>
+	</span>
+	<span class="form">
 		<%= af.text_field :name %>
-	</div>
+	</span>
 	<br>
-	<div class="field">
+	<span class="label">
 		<%= af.label :postal, "Postal_code" %>
+	</span>
+	<span class="form">
 		<%= af.text_field :postal %>
-	</div>
-	<div class="field">
-		<%= af.label :address, "Address" %>
-		<%= af.text_field :address %>
-	</div>
+	</span>
 	<br>
-	<div class="field">
+	<span class="label">
+		<%= af.label :address, "Address" %>
+	</span>
+	<span class="form">
+		<%= af.text_field :address %>
+	</span>
+	<br>
+	<span class="label">
+		<%= af.label :phone_number, "Phone_number" %>
+	</span>
+	<span class="form">
+		<%= af.text_field :phone_number %>
+	</span>
+	<br>
+	<span class="label">
 		<%= af.label :payment_method, "Payment_method" %>
+	</span>
+	<span class="form">
 		<%= af.select(:payment_method,
 		 { '代金引換' => 1, '銀行振込' => 2, 'カード払い' => 3 },
 		 { include_blank: '選択してください'} ,
 		 {id: 'info'}) %>
-	</div>
+	</span>
 
 	<div id='card_info'>
 	</div>
@@ -57,9 +73,5 @@
 			});
 		});
 	</script>
-
-	<div class="field">
-		<%= af.label :phone_number, "Phone_number" %>
-		<%= af.text_field :phone_number %>
-	</div>
+	<br>
 <% end %>

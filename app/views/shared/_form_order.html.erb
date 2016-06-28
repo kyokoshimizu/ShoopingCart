@@ -1,61 +1,104 @@
-<% if @change_order.errors.any? %>
-	<div id="error_explanation">
-		<ul>
-		<% @change_order.errors.full_messages.each do |msg| %>
-			<li><%= msg %></li>
-		<% end %>
-		</ul>
-	</div>
-<% end %>
-<%= form_for @change_order do |f| %>
-	<div class="field">
-		<%= f.label :name, "Name" %>
-		<%= f.text_field :name %>
-	</div>
-	<br>
-	<div class="field">
-		<%= f.label :postal, "Postal_code" %>
-		<%= f.text_field :postal %>
-	</div>
-	<div class="field">
-		<%= f.label :address, "Adderess" %>		
-		<%= f.text_field :address %>
-	</div>
-	<br>
-	<div class="field">
-		<%= f.label :payment_method, "Payment_method" %>
-		<%= f.select( :payment_method,
-		 { '代金引換' => 1, '銀行振込' => 2, 'カード払い' => 3 },
-		 { include_blank: '選択してください'},
-		 {id: 'info'}) %>
-	</div>
+<div class="all">
+	<% if @information.errors.any? %>
+		<div id="error_explanation">
+			<ul class="links">
+			<% @information.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+			</ul>
+		</div>
+	<% end %>
+	<%= form_for @information do |f| %>
+		<span class="label">
+			<%= f.label :name, "Name" %>
+		</span>
+		<span class="form">
+			<%= f.text_field :name %>
+		</span>
+		<br>
+		<span class="label">
+			<%= f.label :postal, "Postal_code" %>
+		</span>
+		<span class="form">
+			<%= f.text_field :postal %>
+		</span>
+		<br>
+		<span class="label">
+			<%= f.label :address, "Address" %>
+		</span>
+		<span class="form">
+			<%= f.text_field :address %>
+		</span>
+		<br>
+		<span class="label">
+			<%= f.label :phone_number, "Phone_number" %>
+		</span>
+		<span class="form">
+			<%= f.text_field :phone_number %>
+		</span>
+		<br>
+		<span class="label">
+			<%= f.label :payment_method, "Payment_method" %>
+		</span>
+		<span class="form">
+			<%= f.select(:payment_method,
+			 { '代金引換' => 1, '銀行振込' => 2, 'カード払い' => 3 },
+			 { include_blank: '選択してください'},
+			 { id: 'info'}) %>
+		</span>
 
-	<div id='card_info'>
+		<div id='card_info'>
+		</div>
+			
+		<div id='defo_info'>
+			<% if @information.payment_method == '3' %>
+				<% @card_info = @information.card_info %>
+				<%= render 'shared/form_card' %>
+			<% elsif @information.payment_method == 3 %>
+				<% @card_info = @information.card_info if @information.card_info%>
+				<%= render 'shared/form_card' %>
+			<% end %>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('#info').change(function(){
+					var num = $('#info').val();
+					if(num == 3){
+						$.get("<%= new_card_info_path %>")
+						$('#defo_info').fadeOut();
+					}else if(num == 1){
+						$('#card_info').html("　手数料がかかります！");
+						$('#defo_info').fadeOut();
+					}else{
+						$('#card_info').html("");
+						$('#defo_info').fadeOut();
+					}
+				});
+			});
+		</script>
+		<br>
+		<br>
 	</div>
-	<br>
-	<div id='defo_info'>
-		<% if @change_order.payment_method == 3 %>
-			<%= render 'shared/form_card' %>
-		<% end %>
-	</div>
-	<script type="text/javascript">
+		<div class="action">
+			<%= f.submit "送信" %>
+		</div>
+	<% end %>	
+
+	<!--<script type="text/javascript">
 		$(document).ready(function(){
 			$('#info').change(function(){
 				var num = $('#info').val();
 				if(num == 3){
 					$.get("<%= new_card_info_path %>")
-				}else{
+					$('#defo_info').fadeOut();
+				}else if(num == 1){
+					$('#defo_info').fadeOut();
 					$('#card_info').html("手数料がかかります！");
+				}else{
+					$('#card_info').html("");
+					$('#defo_info').fadeOut();
 				}
 			});
 		});
-	</script>
-
-	<div class="field">
-		<%= f.label :phone_number, "Phone_number" %>
-		<%= f.text_field :phone_number %>
-	</div>
-	<div class="field">
-		<%= f.submit "登録" %>
-	</div>
-<% end %>
+	</script> -->

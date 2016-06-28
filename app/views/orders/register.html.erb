@@ -22,11 +22,12 @@
 	<p class="border"></p>
 	<p>合計金額：<%= Material.more_than_thousant?((sum * 1.08).to_i) %>円</p>
 </div>
+
 	<% if sum == 0 %>
 		<h2>まだ何も頼んでないですよ</h2>
 	<% else %>
 		<% if !@order.name %>
-			<%= link_to "送り先登録", new_order_path %>
+			<span class="links"><%= link_to "送り先登録", new_order_path %></span>
 		<% else %>
 			<h2>購入方法</h2>
 			<table>
@@ -41,18 +42,18 @@
 				</tr>
 			</table>
 			<div class="info">
-			<% if @payment_method == "カード払い" %>
-			 	<% if !@order.id %>
-			 		<% self_information = SelfInformation.find_by(member_id: @order.member_id) %>
-			 		<% @order.card_info = self_information.card_info %>
+				<% if @payment_method == "カード払い" %>
+				 	<% if !@order.id %>
+				 		<% self_information = SelfInformation.find_by(member_id: @order.member_id) %>
+				 		<% @order.card_info = self_information.card_info %>
+					<% end %>
+					<%= render 'shared/card_info' %>
 				<% end %>
-				<%= render 'shared/card_info' %>
-			<% end %>
 			</div>
-			<%= link_to "購入確定", action: 'decide' %>
+			<span class="links"><%= link_to "購入確定", action: 'decide' %></span>
 		<% end %>
-		<% if session[:name] != "" %>
-		<%= link_to "送り先変更", @path %>
+	<% if session[:name] != "" %>
+	<%= link_to "送り先変更", @path %>
 	<% end %>
 <% end %>
-<%=link_to "戻る", controller: :shopping_carts %>
+　　<%=link_to "戻る", controller: :shopping_carts %>

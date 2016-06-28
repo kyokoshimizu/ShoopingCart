@@ -1,7 +1,9 @@
-<div>
-	<%= @params %>
-	<h1>ERROR PAGE!!</h1>
-	<br>
-	<p id="notice"><%= notice %></p>
+<%= @params %>
+<h1>ERROR PAGE!!</h1>
+<br>
+<p id="notice"><%= notice %></p>
+<% if session[:member_id] == "" %>
 	<%= link_to "戻る", action: :index %>
-</div>
+<% else %>
+	<%= link_to "戻る", materials_path %>
+<% end %>

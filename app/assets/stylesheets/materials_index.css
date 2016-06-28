@@ -31,11 +31,11 @@ table th {
 	color: #FFF0F5;
 }
 
-ul {
+ul.links{
 	padding-left: 25%;
 }
 
-li {
+li.links{
 	display: inline;
 	list-style-type: none;
 	padding-right: 30px;
