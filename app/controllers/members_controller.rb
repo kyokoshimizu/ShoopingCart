@@ -79,7 +79,8 @@ private
 	end
 
 	def card_params(params)
-		card_params = { card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code] }
+		card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
+		card_params = { card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code] }
 	end
 
 

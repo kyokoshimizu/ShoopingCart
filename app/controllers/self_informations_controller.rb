@@ -7,7 +7,7 @@ class SelfInformationsController < ApplicationController
 	def update
 		@self_information = SelfInformation.find_by(member_id: session[:member_id])
 		if @self_information.update(info_params)
-			CardInfo.re_create(params, @self_information.id) if @self_information.payment_method == '3'
+		p	CardInfo.re_create(params, @self_information.id) if @self_information.payment_method == '3'
 			session[:name] = info_params[:name]
 			redirect_to materials_path
 		else

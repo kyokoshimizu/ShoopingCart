@@ -10,28 +10,28 @@ class CardInfo < ActiveRecord::Base
 		presence: { message: "を入力してください" },
 		format: { with: /\A\d{3,4}\z/, allow_blank: true, message: "：半角数字3~4桁づつで記入してください"}
 
-
-
 	def self.re_create(params, id)
+		p card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
 		if CardInfo.find_by(self_information_id: id)
 			card_info = CardInfo.find_by(self_information_id: id)
-			card_info.update(card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )
+			card_info.update(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )
 		else
-			card_info = CardInfo.new(card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )
+			card_info = CardInfo.new(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )
 			card_info.save
 		end
+		card_info
 	end
 
 	def self.re_create_order(params, id)
+		card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
 		if CardInfo.find_by(order_id: id)
 			card_info = CardInfo.find_by(order_id: id)
-			card_info.update(card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], order_id: id )
-			card_info
+			card_info.update(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], order_id: id )
 		else
-			card_info = CardInfo.new(card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], order_id: id )
+			card_info = CardInfo.new(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], order_id: id )
 			card_info.save
-			card_info
 		end
+		card_info
 	end
 
 	def self.get_month
@@ -81,6 +81,12 @@ class CardInfo < ActiveRecord::Base
 		end
 	end
 
+	def self.get_card_num(a, b, c, d)
+		card_num = a+b+c+d
+		[a, b, c, d].map { |var| card_num = 0 if var.size != 4 }
+		p card_num
+	end
+
 private
 	def self.get_card_info(self_information_id, order_id)
 		if self_information_id
@@ -90,7 +96,7 @@ private
 		end
 	end
 
-	def card_params(params, id)
-		params ={ card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id }
-	end
+	#def card_params(params, id)
+	#	params ={ card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id }
+	#end
 end

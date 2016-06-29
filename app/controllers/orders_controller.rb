@@ -52,9 +52,7 @@ class OrdersController < ApplicationController
 			@change_order.shopping_cart_id, @change_order.member_id = session[:shopping_cart_id], member_id
 			if @change_order.payment_method == 3
 				@card_info = CardInfo.new(card_params(params))
-				@card_info.save
-				@card_info.valid?
-				judge = (@card_info.errors).size == 0
+				judge = @card_info.save #&= CardInfo.be_saved?(@card_info, params)
 			end
 
 			if @change_order.save && judge
@@ -75,8 +73,7 @@ class OrdersController < ApplicationController
 		end
 
 		if @change_order.update(order_params) && judge
-			#@card_info.save
-			redirect_to action: 'register'
+ 			redirect_to action: 'register'
 		else
 			render 'edit'
 		end
@@ -108,6 +105,7 @@ private
 		params = { shopping_cart_id: session[:shopping_cart_id], name: member.self_information.name, address: member.self_information.address, postal: member.self_information.postal, payment_method: member.self_information.payment_method, phone_number: member.self_information.phone_number, decide_order: false, member_id: member.id }
 	end
 	def card_params(params)
-		card_params = { card_num: (params[:a] + params[:b] + params[:c] + params[:d]) , deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code] }
+		card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
+		card_params = { card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code] }
 	end
 end
