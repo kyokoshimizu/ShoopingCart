@@ -68,9 +68,11 @@ class OrdersController < ApplicationController
 	def update
 		@change_order = Order.find(params[:id])
 		judge = true
-		if @change_order.payment_method == 3
+		p params
+		if params["order"]["payment_method"] == "3"
+			p "HEKKo"
 			@card_info = CardInfo.re_create_order(params, params[:id])
-			judge = @card_info.valid?
+			p judge = @card_info.valid?
 		end
 
 		if @change_order.update(order_params) && judge

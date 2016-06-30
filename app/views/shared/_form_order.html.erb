@@ -54,7 +54,8 @@
 			
 		<div id='defo_info'>
 			<% if @information.payment_method == '3' %>
-				<%# @card_info = @information.card_info %>
+				<%# @card_info ||= CardInfo.find_or_create_by(self_information_id: @self_information.id)
+ %>
 				<%= render 'shared/form_card' %>
 			<% elsif @information.payment_method == 3 %>
 				<%# @card_info = @information.card_info if @information.card_info %>

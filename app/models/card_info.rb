@@ -13,9 +13,11 @@ class CardInfo < ActiveRecord::Base
 	def self.re_create(params, id)
 		card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
 		if CardInfo.find_by(self_information_id: id)
+			p "HELLO"
 			card_info = CardInfo.find_by(self_information_id: id)
 			card_info.update(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )
 		else
+			p "HELLO"
 			card_info = CardInfo.new(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )
 			card_info.save
 		end
