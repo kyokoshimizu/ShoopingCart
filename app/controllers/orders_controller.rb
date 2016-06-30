@@ -7,6 +7,7 @@ class OrdersController < ApplicationController
 			@member = Member.find(session[:member_id])
 			@num = params[:id].to_i
 			@difference = params[:difference].to_i
+			@start = params[:finish].to_i+1
 		end
 	end
 	def register

@@ -11,7 +11,7 @@ class CardInfo < ActiveRecord::Base
 		format: { with: /\A\d{3,4}\z/, allow_blank: true, message: "：半角数字3~4桁づつで記入してください"}
 
 	def self.re_create(params, id)
-		p card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
+		card_num = CardInfo.get_card_num(params[:a], params[:b], params[:c], params[:d])
 		if CardInfo.find_by(self_information_id: id)
 			card_info = CardInfo.find_by(self_information_id: id)
 			card_info.update(card_num: card_num, deadline: params[:card_info][:deadline], deadline2: params[:card_info][:deadline2], times: params[:card_info][:times], code: params[:card_info][:code], self_information_id: id )

@@ -1,16 +1,23 @@
 class SelfInformationsController < ApplicationController
 	def edit
 		@self_information = SelfInformation.find_by(member_id: session[:member_id])
+		@card_info ||= CardInfo.find_by(self_information_id: @self_information.id)
 		redirect_to members_path if !@self_information
 	end
 
 	def update
+		judge = true
 		@self_information = SelfInformation.find_by(member_id: session[:member_id])
-		if @self_information.update(info_params)
-		p	CardInfo.re_create(params, @self_information.id) if @self_information.payment_method == '3'
-			session[:name] = info_params[:name]
+		#@self_information = SelfInformation.change_element(@self_information, params)
+		if @self_information.payment_method == '3'
+			@card_info = CardInfo.re_create(params, @self_information.id)
+			judge = @card_info.valid?
+		end
+
+		if judge && @self_information.update(info_params)
 			redirect_to materials_path
 		else
+
 			render 'edit'
 		end
 	end

@@ -54,4 +54,10 @@ class Order < ActiveRecord::Base
 		end
 		path
 	end
+
+	def self.has_more?(orders, num)
+		p num
+		orders[num..(orders.size)-1].each { |order| return true if order.decide_order == true }
+		false
+	end
 end

@@ -17,4 +17,8 @@ class SelfInformation < ActiveRecord::Base
 	validates :payment_method,
 		presence: { message: "を入力してください" },
 		numericality: { greater_than_or_equal_to: 1, less_than_or_equal_to: 3, allow_blank: true, message: 'のところで変なことをしないでください' }
+
+		def self.change_element(self_information, params)
+			{name: params[:name], address: params[:address], postal: params[:postal], payment_method: params[:payment_method], phone_number: params[:phone_number]}
+		end
 end
